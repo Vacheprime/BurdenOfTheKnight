@@ -4,13 +4,13 @@ using UnityEngine.AI;
 public class BatAI : MonoBehaviour
 {
     [Header("Detection & Movement")]
-    public float detectRange = 18f;      // how far it can see you
-    public float stopDistance = 6f;      // how close it gets before just shooting
+    public float detectRange = 18f;      
+    public float stopDistance = 6f;      
 
     [Header("Attack")]
-    public float shootCooldown = 2.0f;   // seconds between shots
-    public Transform shootPoint;         // mouth / front
-    public GameObject projectilePrefab;  // your arrow / fireball / whatever
+    public float shootCooldown = 2.0f;   
+    public Transform shootPoint;       
+    public GameObject projectilePrefab;
     public float projectileSpeed = 15f;
 
     NavMeshAgent agent;
@@ -36,7 +36,6 @@ public class BatAI : MonoBehaviour
 
         if (dist <= detectRange)
         {
-            // Face the player (keep bat level)
             Vector3 lookDir = player.position - transform.position;
             lookDir.y = 0f;
             if (lookDir.sqrMagnitude > 0.001f)
@@ -47,7 +46,6 @@ public class BatAI : MonoBehaviour
 
             if (dist > stopDistance)
             {
-                // Move towards player
                 if (agent)
                 {
                     agent.isStopped = false;
@@ -58,7 +56,6 @@ public class BatAI : MonoBehaviour
             }
             else
             {
-                // Stop & shoot
                 if (agent) agent.isStopped = true;
                 if (anim) anim.SetBool("isMoving", false);
 
@@ -67,7 +64,6 @@ public class BatAI : MonoBehaviour
         }
         else
         {
-            // Out of range → idle
             if (agent) agent.isStopped = true;
             if (anim) anim.SetBool("isMoving", false);
         }
@@ -78,13 +74,11 @@ public class BatAI : MonoBehaviour
         if (Time.time < nextShotTime) return;
         nextShotTime = Time.time + shootCooldown;
 
-        // trigger attack animation if you have one
         if (anim) anim.SetTrigger("Attack");
 
         ShootProjectile();
     }
 
-    // You can also call this from an animation event
     public void ShootProjectile()
     {
         if (!shootPoint || !projectilePrefab) return;
@@ -96,7 +90,6 @@ public class BatAI : MonoBehaviour
             rb.linearVelocity = shootPoint.forward * projectileSpeed;
         }
 
-        // optional: auto-destroy after 5s
         Destroy(proj, 5f);
     }
 }
