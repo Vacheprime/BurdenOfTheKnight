@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WizardAI2 : MonoBehaviour
+public class WizardAI : MonoBehaviour
 {
     public float detectRange = 18f;
     public float attackRange = 12f;
@@ -20,6 +20,9 @@ public class WizardAI2 : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim  = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if (player == null)
+            Debug.LogError("WizardAI: No object with tag 'Player' found!");
     }
 
     void Update()
@@ -65,13 +68,17 @@ public class WizardAI2 : MonoBehaviour
     {
         if (!spellPrefab || !spellSpawn || !player) return;
 
-        GameObject spell = Instantiate(spellPrefab, spellSpawn.position, spellSpawn.rotation);
+        // 1. Spawn spell with neutral rotation (we'll control direction in code)
+        GameObject spell = Instantiate(spellPrefab, spellSpawn.position, Quaternion.identity);
 
-        Vector3 target = new Vector3(player.position.x, spellSpawn.position.y, player.position.z);
-        Vector3 dir = (target - spellSpawn.position).normalized;
+        // 2. Aim at the player (slightly up so it doesn't just hit the feet)
+        Vector3 target = player.position + Vector3.up * 1.5f; 
+        Vector3 dir = (target - spellSpawn.position); // Fire() will normalize
 
-        Rigidbody rb = spell.GetComponent<Rigidbody>();
-        if (rb != null)
-            rb.linearVelocity = dir * 20f;
+        // 3. Tell the projectile which way to go
+        WizardSpellProjectile proj = spell.GetComponent<WizardSpellProjectile>();
+        if (proj != null)
+            proj.Fire(dir);
     }
+
 }

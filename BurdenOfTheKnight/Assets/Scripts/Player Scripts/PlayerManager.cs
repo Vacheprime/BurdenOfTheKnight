@@ -14,7 +14,8 @@ public class PlayerManager : MonoBehaviour
     private float magicPoints;
     public Slider magicSlider;
 
-    private float health;
+    // commented out for testing purpose for wizard
+    //private float health;
     public Slider healthSlider;
 
     public static PlayerManager Instance { get; private set; }
@@ -36,7 +37,8 @@ public class PlayerManager : MonoBehaviour
     {
         magicPoints = 100;
         SetMagicPoints(magicPoints);
-        health = 100;
+        // commented out for testing purpose for wizard
+        //health = 100;
     }
 
     void Update()

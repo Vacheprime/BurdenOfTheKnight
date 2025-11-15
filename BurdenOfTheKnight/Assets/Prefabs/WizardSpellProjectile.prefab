@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8844721706197172377}
   - component: {fileID: 7891361255370493608}
   - component: {fileID: 7497890023327255504}
+  - component: {fileID: -1853774032962499166}
   m_Layer: 0
   m_Name: WizardSpellProjectile
   m_TagString: Untagged
@@ -4886,3 +4887,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-1853774032962499166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026461833157467268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10447822a4ba10c4dbde44e9a2115f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WizardSpellProjectile
+  speed: 15
+  lifeTime: 4
+  damage: 15

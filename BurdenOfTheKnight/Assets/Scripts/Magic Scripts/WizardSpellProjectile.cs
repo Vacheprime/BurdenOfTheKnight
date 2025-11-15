@@ -1,41 +1,47 @@
-// using UnityEngine;
+using UnityEngine;
 
-// [RequireComponent(typeof(Rigidbody))]
-// public class WizardSpellProjectile : MonoBehaviour
-// {
-//     public float speed = 15f;
-//     public float lifeTime = 4f;
-//     public float damage = 15f;
+[RequireComponent(typeof(Rigidbody))]
+public class WizardSpellProjectile : MonoBehaviour
+{
+    public float speed    = 15f;
+    public float lifeTime = 4f;
+    public float damage   = 15f;
 
-//     Rigidbody rb;
+    private Rigidbody rb;
 
-//     void Awake()
-//     {
-//         rb = GetComponent<Rigidbody>();
-//         rb.useGravity = false;
-//         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-//         rb.interpolation = RigidbodyInterpolation.Interpolate;
-//     }
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
 
-//     public void Fire(Vector3 dir)
-//     {
-//         dir.Normalize();
-//         transform.forward = dir;
-//         rb.velocity = dir * speed;
-//         Invoke(nameof(Die), lifeTime);
-//     }
+        rb.useGravity = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+    }
 
-//     void OnTriggerEnter(Collider other)
-//     {
-//         var hp = other.GetComponent<PlayerHealth>();
-//         if (hp != null)
-//             hp.TakeDamage(damage);
+    public void Fire(Vector3 dir)
+    {
+        dir.Normalize();
+        transform.forward = dir;
 
-//         Die();
-//     }
+        rb.linearVelocity = dir * speed;
 
-//     void Die()
-//     {
-//         Destroy(gameObject);
-//     }
-// }
+        CancelInvoke();
+        Invoke(nameof(Die), lifeTime);
+    }
+
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     var hp = other.GetComponent<PlayerHealth>();
+    //     if (hp != null)
+    //     {
+    //         hp.TakeDamage(damage);
+    //     }
+
+    //     Die();
+    // }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+}
