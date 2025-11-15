@@ -17,18 +17,16 @@ public class ArrowProjectile : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
-    // Call this immediately after Instantiate
     public void Fire(Vector3 dir)
     {
         dir.Normalize();
-        transform.forward = dir;      // make Z+ face travel direction
-        rb.linearVelocity = dir * speed;    // physics-driven travel
+        transform.forward = dir;     
+        rb.linearVelocity = dir * speed;
         Invoke(nameof(Die), lifeTime);
     }
 
     // void OnTriggerEnter(Collider other)
     // {
-    //     // Example: apply damage to player
     //     var hp = other.GetComponent<PlayerHealth>();
     //     if (hp) hp.TakeDamage(damage);
     //     Die();

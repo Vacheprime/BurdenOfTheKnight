@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class SkeletonSpawner : MonoBehaviour
 {
     [Header("Prefab & Area")]
-    public GameObject skeletonPrefab;      // assign your Skeleton prefab
-    public BoxCollider spawnArea;          // assign the BoxCollider on this object
+    public GameObject skeletonPrefab;   
+    public BoxCollider spawnArea;          
 
     [Header("Counts & Timing")]
     public int initialCount = 5;
@@ -19,7 +19,6 @@ public class SkeletonSpawner : MonoBehaviour
     void Start()
     {
         if (spawnArea == null) spawnArea = GetComponent<BoxCollider>();
-        // initial wave
         for (int i = 0; i < initialCount; i++) TrySpawnOne();
         StartCoroutine(RespawnLoop());
     }
@@ -29,7 +28,6 @@ public class SkeletonSpawner : MonoBehaviour
         var wait = new WaitForSeconds(respawnEvery);
         while (true)
         {
-            // purge nulls (killed/despawned)
             alive.RemoveAll(go => go == null);
             if (alive.Count < maxAlive) TrySpawnOne();
             yield return wait;
@@ -40,7 +38,6 @@ public class SkeletonSpawner : MonoBehaviour
     {
         if (skeletonPrefab == null || spawnArea == null) return;
 
-        // pick a random point inside the BoxCollider
         Vector3 local = new Vector3(
             Random.Range(-spawnArea.size.x * 0.5f, spawnArea.size.x * 0.5f),
             Random.Range(-spawnArea.size.y * 0.5f, spawnArea.size.y * 0.5f),
@@ -48,7 +45,6 @@ public class SkeletonSpawner : MonoBehaviour
         );
         Vector3 world = spawnArea.transform.TransformPoint(local + spawnArea.center);
 
-        // project to a valid NavMesh position near that point
         if (NavMesh.SamplePosition(world, out NavMeshHit hit, 6f, NavMesh.AllAreas))
         {
             var go = Instantiate(skeletonPrefab, hit.position, Quaternion.identity);
@@ -56,7 +52,6 @@ public class SkeletonSpawner : MonoBehaviour
         }
     }
 
-    // visualize spawn volume
     void OnDrawGizmosSelected()
     {
         var col = spawnArea ? spawnArea : GetComponent<BoxCollider>();
