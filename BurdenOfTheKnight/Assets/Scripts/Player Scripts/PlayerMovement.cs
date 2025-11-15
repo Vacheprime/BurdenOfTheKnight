@@ -40,11 +40,11 @@ public class PlayerMovement : MonoBehaviour
         //handle drag
         if (grounded)
         {
-            rb.drag = groundDrag; 
+            rb.linearDamping = groundDrag; 
         }
         else
         {
-            rb.drag = 0f;
+            rb.linearDamping = 0f;
         }
     }
 
@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SpeedControl()
     {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
 
         // limit velocity if needed
         if (flatVel.magnitude > moveSpeed)
@@ -76,11 +76,11 @@ public class PlayerMovement : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             if (Input.GetButton("Left Shift"))
             {
-                rb.velocity = new Vector3(limitedVel.x * 2, rb.velocity.y, limitedVel.z * 2);
+                rb.linearVelocity = new Vector3(limitedVel.x * 2, rb.linearVelocity.y, limitedVel.z * 2);
             }
             else
             {
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
     }
