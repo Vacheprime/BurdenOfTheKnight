@@ -68,14 +68,11 @@ public class WizardAI : MonoBehaviour
     {
         if (!spellPrefab || !spellSpawn || !player) return;
 
-        // 1. Spawn spell with neutral rotation (we'll control direction in code)
         GameObject spell = Instantiate(spellPrefab, spellSpawn.position, Quaternion.identity);
 
-        // 2. Aim at the player (slightly up so it doesn't just hit the feet)
         Vector3 target = player.position + Vector3.up * 1.5f; 
-        Vector3 dir = (target - spellSpawn.position); // Fire() will normalize
+        Vector3 dir = (target - spellSpawn.position);
 
-        // 3. Tell the projectile which way to go
         WizardSpellProjectile proj = spell.GetComponent<WizardSpellProjectile>();
         if (proj != null)
             proj.Fire(dir);
