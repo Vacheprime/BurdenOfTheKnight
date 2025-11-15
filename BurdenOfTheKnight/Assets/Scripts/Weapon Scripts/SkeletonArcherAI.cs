@@ -5,8 +5,8 @@ using UnityEngine.AI;
 public class SkeletonArcherAI : MonoBehaviour
 {
     public float detectRange = 14f, loseSightRange = 18f, shootRange = 12f, shootCooldown = 1.5f;
-    public GameObject arrowPrefab;     // ArrowProjectile
-    public Transform arrowSpawn;       // ArrowSpawn under bow
+    public GameObject arrowPrefab;     
+    public Transform arrowSpawn;    
     NavMeshAgent agent; Animator anim; Transform player; float nextShot;
 
     void Awake() {
@@ -29,28 +29,20 @@ public class SkeletonArcherAI : MonoBehaviour
                 if (Time.time >= nextShot) { Shoot(); nextShot = Time.time + shootCooldown; }
             }
         } else {
-            agent.isStopped = false; // optional wander omitted for brevity
+            agent.isStopped = false;
         }
         if (anim) anim.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     void Shoot()
     {
-        if (!arrowPrefab || !arrowSpawn) return;
+        if (arrowPrefab == null || arrowSpawn == null) return;
+        Vector3 playerPos = player.position;
+        Vector3 flatTarget = new Vector3(playerPos.x, arrowSpawn.position.y, playerPos.z);
+        Vector3 dir = (flatTarget - arrowSpawn.position).normalized;
+        GameObject arrowObj = Instantiate(arrowPrefab, arrowSpawn.position, Quaternion.LookRotation(dir));
+        arrowObj.GetComponent<ArrowProjectile>().Fire(dir);
 
-        // Aim at player chest
-        Vector3 aimPoint = player.position + Vector3.up * 1.2f;
-        Vector3 dir = (aimPoint - arrowSpawn.position).normalized;
-
-        // Visual check in Game view: should point from bow to player
-        Debug.DrawRay(arrowSpawn.position, dir * 5f, Color.red, 0.5f);
-
-        var go = Instantiate(arrowPrefab,
-                            arrowSpawn.position,
-                            Quaternion.LookRotation(dir)); // faces forward
-        go.GetComponent<ArrowProjectile>()?.Fire(dir);
-
-        // anim?.SetTrigger("RightAttack"); // only if you added that trigger
+        if (anim) anim.SetTrigger("RightAttack");
     }
-
 }

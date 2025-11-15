@@ -28,11 +28,10 @@ public class PlayerManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: if you want it to persist across scenes
+            DontDestroyOnLoad(gameObject);
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         magicPoints = 100;
@@ -40,7 +39,6 @@ public class PlayerManager : MonoBehaviour
         health = 100;
     }
 
-    // Update is called once per frame
     void Update()
     {
         CalculateMagicPoints();
