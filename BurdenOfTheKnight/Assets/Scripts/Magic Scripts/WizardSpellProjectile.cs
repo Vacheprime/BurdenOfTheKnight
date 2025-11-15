@@ -29,6 +29,7 @@ public class WizardSpellProjectile : MonoBehaviour
         Invoke(nameof(Die), lifeTime);
     }
 
+    //Commented out for testing purposes
     // void OnTriggerEnter(Collider other)
     // {
     //     var hp = other.GetComponent<PlayerHealth>();
