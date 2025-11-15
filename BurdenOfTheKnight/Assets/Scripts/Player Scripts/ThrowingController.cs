@@ -20,18 +20,22 @@ public class ThrowingController : MonoBehaviour
     public float throwUpwardForce;
 
     bool readyToThrow;
+    bool enoughMagicPoints;
 
     private void Start()
     {
         readyToThrow = true;
-
     }
     
     private void Update()
     {
         if (Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
         {
-            Throw();
+            enoughMagicPoints = PlayerManager.Instance.CastTestMagic();
+            if (enoughMagicPoints == true)
+            {
+                Throw();
+            }
         }
     }
 
