@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     bool grounded;
 
-    public Transform orientation;
+    public Transform cameraPivotTransform;
 
     float horizontalInput;
     float verticalInput;
@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
@@ -46,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearDamping = 0f;
         }
+        
+        RotateToCamera();
     }
 
     private void FixedUpdate()
@@ -62,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         // calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
     }
 
@@ -83,5 +86,11 @@ public class PlayerMovement : MonoBehaviour
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
+    }
+
+    private void RotateToCamera()
+    {
+        // Get y rotation
+        transform.rotation = Quaternion.Euler(0, cameraPivotTransform.eulerAngles.y, 0);
     }
 }
