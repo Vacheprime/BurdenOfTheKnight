@@ -11,12 +11,10 @@ public class PlayerSwordSystem : MonoBehaviour
     private bool isInCombat = false;
     private GameObject currentTarget = null;
 
+    private CursorPath cursorPath = new CursorPath();
 
-    private Vector2 prevMousePosition;
-
-    public float MouseRequiredDistance = 200;
-    public float MouseRequiredVelocity = 10;
-    public float MiddleZoneDimension = 100;
+    private double sampleInterval = 0.03f; // 10 ms sample time
+    private double nextSampleTime = 0f;
 
     public void Update()
     {
@@ -66,7 +64,7 @@ public class PlayerSwordSystem : MonoBehaviour
 
         // Reset values
         currentTarget = null;
-        prevMousePosition = new Vector2(Screen.width / 2, Screen.height / 2);
+        cursorPath.ClearCursorPoints();
     }
 
     private void manageCombat()
@@ -85,61 +83,53 @@ public class PlayerSwordSystem : MonoBehaviour
         // Get the mouse X and Y position
         Vector2 mousePosition = Input.mousePosition;
 
-        if (CheckMouseMovement(mousePosition))
+        // Register attack positions
+
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("SHOULD ATTACK");
-            // Execute attack logic
+            cursorPath.AddCursorCoordinate(mousePosition, Time.unscaledTimeAsDouble);
         }
 
-        prevMousePosition = mousePosition;
+        if (Input.GetMouseButton(0))
+        {
+            // Register event only if enough time has passed.
+            if (Time.unscaledTimeAsDouble > nextSampleTime)
+            {
+                // Register the coordinate only if it is different than the last one
+                Vector2 lastPosition = cursorPath.GetLastCursorPos();
+
+                // Skip if mouse did not move
+                if (lastPosition == mousePosition)
+                {
+                    return;
+                }
+
+                cursorPath.AddCursorCoordinate(mousePosition, Time.timeAsDouble);
+
+                nextSampleTime = Time.unscaledTimeAsDouble + sampleInterval;
+            }
+        }
+
+        // Execute attack
+        if (Input.GetMouseButtonUp(0))
+        {
+            
+            // Execute attack if all points are filled
+            if (cursorPath.IsFilled())
+            {
+                CheckMouseMovement();
+            }
+            // Clear cursor path
+            cursorPath.ClearCursorPoints();
+        }
     }
 
-    private bool CheckMouseMovement(Vector2 mousePosition)
+    private bool CheckMouseMovement()
     {
-        
-        // Check if first frame of combat mode
-        if (prevMousePosition.x == 0 && prevMousePosition.y == 0)
+        //Debug.Log($"FILLED, EXEC: {cursorPath}");
+        if (cursorPath.GetAvgMouseVelocity() >= 4000 && cursorPath.GetDistanceTravelled() >= 30)
         {
-            return false;
-        }
-
-        // Calulate mouse velocity and distance
-        Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-
-        Vector2 delta = mousePosition - prevMousePosition;
-
-        float mouseTravelDistance = delta.magnitude;
-
-        // Normalize by screen size to remove diagonal/resolution bias
-        float normDx = delta.x / Screen.width;
-        float normDy = delta.y / Screen.height;
-
-        float normalizedDistance = Mathf.Sqrt(normDx * normDx + normDy * normDy);
-
-        float mouseVelocity = normalizedDistance / Time.deltaTime;
-
-        if (prevMousePosition != mousePosition)
-        {
-            Debug.Log($"Prev: {prevMousePosition}; Curr: {mousePosition}");
-        }
-        
-        
-        // Check if mouse is outside reset box
-        if (prevMousePosition.x > screenCenter.x - MiddleZoneDimension &&
-            prevMousePosition.x < screenCenter.x + MiddleZoneDimension)
-        {
-            return false;
-        }
-
-        if (prevMousePosition.y > screenCenter.y - MiddleZoneDimension &&
-            prevMousePosition.y < screenCenter.y + MiddleZoneDimension)
-        {
-            return false;
-        }
-
-        if (mouseVelocity < MouseRequiredVelocity || mouseTravelDistance < MouseRequiredDistance)
-        {
-            return false;
+            Debug.Log("ATTACK!!!!");
         }
         return true;
     }
