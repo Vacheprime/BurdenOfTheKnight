@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -8,19 +9,20 @@ public class Movement : MonoBehaviour
     private Camera playerCam;
     private float rotationX = 0f;
 
+    // Jump Movement
+    public float jumpForce = 10.0f;
+    private Rigidbody rb;
+    private bool isGrounded;
+
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         playerCam = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked; 
     }
 
     void Update()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical"); 
-        Vector3 move = transform.right * moveX + transform.forward * moveZ;
-        transform.position += move * speed * Time.deltaTime;
-
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -29,6 +31,19 @@ public class Movement : MonoBehaviour
 
         playerCam.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    void FixedUpdate() 
+    {
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical"); 
+        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        rb.MovePosition(rb.position + move * speed * Time.fixedDeltaTime);
     }
 
     public void OnCollisionEnter(Collision collision)
