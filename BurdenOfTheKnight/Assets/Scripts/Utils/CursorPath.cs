@@ -87,6 +87,28 @@ public class CursorPath
         return cursorDataPoints.First.Value.dataPoint;
     }
 
+    public (string direction, float strength) GetSwipeData()
+    {
+        // Compute PCA of cursor data points
+        (Vector2 direction, float strength) cursorPathData = PCAUtils.ComputerPCAFromVectors(cursorDataPoints.Select(point => point.dataPoint).ToArray());
+
+        Vector2 direction = cursorPathData.direction;
+        float strength = cursorPathData.strength;
+
+        // Get movement direction
+        Vector2 movementDirection = (cursorDataPoints.Last.Value.dataPoint - cursorDataPoints.First.Value.dataPoint).normalized;
+        Debug.Log(cursorPathData);
+        // If horizontal movement is greater
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            return (movementDirection.x > 0 ? "RIGHT SWIPE" : "LEFT SWIPE", strength);
+        }
+        else
+        {
+            return (movementDirection.y > 0 ? "DOWN SWIPE" : "UP SWIPE", strength);
+        }
+    }
+
     public override string ToString()
     {
         return $"CursorPath(AvgVel: {GetAvgMouseVelocity()}, TotalDist: {GetDistanceTravelled()})";
