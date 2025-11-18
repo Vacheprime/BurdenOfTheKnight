@@ -126,11 +126,9 @@ public class PlayerSwordSystem : MonoBehaviour
 
     private bool CheckMouseMovement()
     {
-        //Debug.Log($"FILLED, EXEC: {cursorPath}");
-        if (cursorPath.GetAvgMouseVelocity() >= 4000 && cursorPath.GetDistanceTravelled() >= 30)
-        {
-            Debug.Log("ATTACK!!!!");
-        }
+        (string direction, float strength) swipeData = cursorPath.GetSwipeData();
+
+        Debug.Log($"dir: {swipeData.direction}; str: {swipeData.strength}");
         return true;
     }
 
