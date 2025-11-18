@@ -30,4 +30,12 @@ public class Movement : MonoBehaviour
         playerCam.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
     }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Collectible")
+        {
+            Destroy(collision.gameObject);
+        }
+    }
 }
