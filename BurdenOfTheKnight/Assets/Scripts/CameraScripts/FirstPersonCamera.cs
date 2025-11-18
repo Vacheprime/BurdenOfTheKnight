@@ -8,7 +8,7 @@ public class FirstPersonCamera : MonoBehaviour
     public float sensX;
     public float sensY;
 
-    public Transform orientation;
+    public GameObject player;
 
     private float xRotation;
     private float yRotation;
@@ -19,7 +19,7 @@ public class FirstPersonCamera : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    public void LateUpdate()
     {
         // get mouse input
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
@@ -30,7 +30,22 @@ public class FirstPersonCamera : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        transform.parent.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+    }
+
+    public void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        // Set the xRotation and yRotation to the current camera transform
+        Vector3 cameraAngles = transform.eulerAngles;
+
+        // Convert angles properly
+        xRotation = cameraAngles.x;
+        if (xRotation > 180)
+        {
+            xRotation -= 360;
+        }
+        yRotation = cameraAngles.y;
     }
 }
