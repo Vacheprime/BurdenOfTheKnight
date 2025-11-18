@@ -13,7 +13,7 @@ public class DoorController : MonoBehaviour
     {
         if (Input.GetKeyDown(interactKey))
         {
-            isOpen = !isOpen; 
+            isOpen = !isOpen;
         }
 
         float targetAngle = isOpen ? openAngle : 0f;
