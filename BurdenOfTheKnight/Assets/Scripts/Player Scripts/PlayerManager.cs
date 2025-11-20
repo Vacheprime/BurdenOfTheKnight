@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
-
     public AudioSource source;
     public AudioLoudnessDetection detector;
     private float loudnessSensitivity = 100;
@@ -14,11 +14,14 @@ public class PlayerManager : MonoBehaviour
     private float magicPoints;
     public Slider magicSlider;
 
-    // commented out for testing purpose for wizard
-    //private float health;
+    public float maxHealth = 100f;
+    private float currentHealth;
+
     public Slider healthSlider;
 
     public static PlayerManager Instance { get; private set; }
+
+    private bool isDead = false;
 
     private void Awake()
     {
@@ -29,7 +32,6 @@ public class PlayerManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -37,8 +39,14 @@ public class PlayerManager : MonoBehaviour
     {
         magicPoints = 100;
         SetMagicPoints(magicPoints);
-        // commented out for testing purpose for wizard
-        //health = 100;
+
+        currentHealth = maxHealth;
+
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = maxHealth;
+        }
     }
 
     void Update()
@@ -46,10 +54,7 @@ public class PlayerManager : MonoBehaviour
         CalculateMagicPoints();
     }
 
-    public float GetMagicPoints()
-    {
-        return magicPoints;
-    }
+    public float GetMagicPoints() => magicPoints;
 
     public bool CastTestMagic()
     {
@@ -58,39 +63,55 @@ public class PlayerManager : MonoBehaviour
             magicPoints -= 15;
             return true;
         }
-        else { return false; }
+        return false;
     }
 
     public void SetMagicPoints(float points)
     {
-        magicSlider.value = points; 
-    }
-
-    public void SetHealth(float points)
-    {
-        healthSlider.value = points;
+        magicPoints = Mathf.Clamp(points, 0, 100);
+        if (magicSlider != null)
+            magicSlider.value = magicPoints;
     }
 
     public void CalculateMagicPoints()
     {
         float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensitivity;
 
-        if (loudness < threshold)
-        {
-            loudness = 0;
-        }
-        else if (loudness > 20)
-        {
-            loudness = 20;
-        }
-        magicPoints += loudness / 1500;
-        if (magicPoints > 100)
-        {
-            magicPoints = 100;
-        }
+        if (loudness < threshold) loudness = 0;
+        else if (loudness > 20) loudness = 20;
+
+        magicPoints += loudness / 1500f;
+        if (magicPoints > 100) magicPoints = 100;
+
         SetMagicPoints(magicPoints);
-        Debug.Log("Loudness: " + loudness);
-        Debug.Log("Magic Points: " + magicPoints);
     }
 
+    public void TakeDamage(float amount)
+    {
+        if (isDead) return;
+
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        SetHealth(currentHealth);
+
+        if (currentHealth <= 0f)
+        {
+            isDead = true;
+            Die();
+        }
+    }
+
+    public void SetHealth(float points)
+    {
+        currentHealth = Mathf.Clamp(points, 0, maxHealth);
+
+        if (healthSlider != null)
+            healthSlider.value = currentHealth;
+    }
+
+    private void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
