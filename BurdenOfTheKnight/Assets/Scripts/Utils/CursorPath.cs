@@ -101,11 +101,11 @@ public class CursorPath
         // If horizontal movement is greater
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
-            return (movementDirection.x > 0 ? "RIGHT SWIPE" : "LEFT SWIPE", strength);
+            return (movementDirection.x > 0 ? "LEFT" : "RIGHT", strength);
         }
         else
         {
-            return (movementDirection.y > 0 ? "DOWN SWIPE" : "UP SWIPE", strength);
+            return (movementDirection.y > 0 ? "DOWN" : "UP", strength);
         }
     }
 

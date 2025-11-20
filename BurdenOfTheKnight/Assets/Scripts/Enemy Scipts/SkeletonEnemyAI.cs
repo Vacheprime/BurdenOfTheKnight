@@ -5,11 +5,11 @@ public class SkeletonEnemyAI : MonoBehaviour
 {
     [Header("Detection")]
     public float detectRange = 12f;
-    public float loseSightRange = 16f;     // hysteresis so it doesn't flicker
+    public float loseSightRange = 16f;     
     public float stopDistance = 1.5f;
 
     [Header("Movement")]
-    public float patrolRadius = 5f;        // optional idle wander
+    public float patrolRadius = 5f;     
     public float idleRepathTime = 3f;
 
     NavMeshAgent agent;
@@ -31,7 +31,6 @@ public class SkeletonEnemyAI : MonoBehaviour
 
         float d = Vector3.Distance(transform.position, player.position);
 
-        // Enter/exit chase
         if (!chasing && d <= detectRange)  chasing = true;
         if (chasing  && d >= loseSightRange) chasing = false;
 
@@ -42,7 +41,6 @@ public class SkeletonEnemyAI : MonoBehaviour
         }
         else
         {
-            // simple idle wander around spawn point
             idleTimer -= Time.deltaTime;
             if (idleTimer <= 0f)
             {
@@ -54,7 +52,6 @@ public class SkeletonEnemyAI : MonoBehaviour
             agent.stoppingDistance = 0f;
         }
 
-        // drive animations (optional)
         if (anim) anim.SetFloat("Speed", agent.velocity.magnitude);
     }
 }
