@@ -194,8 +194,8 @@ GameObject:
   - component: {fileID: 888960670}
   - component: {fileID: 888960669}
   - component: {fileID: 888960674}
-  - component: {fileID: 888960673}
   - component: {fileID: 888960672}
+  - component: {fileID: 888960675}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -290,21 +290,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockOnCameraController
   player: {fileID: 1867963292}
---- !u!114 &888960673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 888960668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9594de77878cc9947a53d25bb73b7734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FirstPersonCamera
-  sensX: 1000
-  sensY: 1000
-  player: {fileID: 1867963292}
 --- !u!114 &888960674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +302,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d5bf5bdd2429b48aca1ba52a358d6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
+--- !u!114 &888960675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888960668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f16cb4828cd5c48b9ce3244d8ada90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstPersonCamera
+  sensX: 1000
+  sensY: 1000
+  player: {fileID: 1867963292}
 --- !u!1 &1280496267
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 1280496270}
   - component: {fileID: 1280496269}
   - component: {fileID: 1280496268}
+  - component: {fileID: 1280496272}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Target
@@ -428,6 +429,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1280496272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280496267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3672d4bc287aab4db9fc249503a8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
 --- !u!1 &1378923907
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +774,7 @@ GameObject:
   - component: {fileID: 1752775433}
   - component: {fileID: 1752775432}
   - component: {fileID: 1752775431}
+  - component: {fileID: 1752775435}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Target
@@ -859,6 +874,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1752775435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752775430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3672d4bc287aab4db9fc249503a8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
 --- !u!1 &1867963292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1097,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSwordSystem
   player: {fileID: 1867963292}
   playerCamera: {fileID: 888960668}
-  attackRange: 2
+  attackRange: 5
+  attackDamage: 40
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
