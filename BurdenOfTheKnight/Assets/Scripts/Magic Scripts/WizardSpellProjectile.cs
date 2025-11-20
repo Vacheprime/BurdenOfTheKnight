@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ArrowProjectile : MonoBehaviour
+public class WizardSpellProjectile : MonoBehaviour
 {
-    public float speed = 30f;
-    public float lifeTime = 5f;
-    public float damage = 10f;
+    public float speed = 15f;
+    public float lifeTime = 4f;
+    public float damage = 15f;
 
     Rigidbody rb;
 
@@ -23,6 +23,7 @@ public class ArrowProjectile : MonoBehaviour
         transform.forward = dir;
         rb.linearVelocity = dir * speed;
 
+        CancelInvoke();
         Invoke(nameof(Die), lifeTime);
     }
 
@@ -34,11 +35,11 @@ public class ArrowProjectile : MonoBehaviour
             {
                 PlayerManager.Instance.TakeDamage(damage);
             }
-
-            Die();
         }
     }
 
-
-    void Die() => Destroy(gameObject);
+    void Die()
+    {
+        Destroy(gameObject);
+    }
 }
