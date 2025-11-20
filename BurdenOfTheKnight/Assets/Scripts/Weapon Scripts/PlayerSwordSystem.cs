@@ -8,6 +8,10 @@ public class PlayerSwordSystem : MonoBehaviour
 {
     public GameObject player;
     public GameObject playerCamera;
+
+    public float attackRange = 2f;
+
+    private Animator swordAnimator;
     private bool isInCombat = false;
     private GameObject currentTarget = null;
 
@@ -15,6 +19,12 @@ public class PlayerSwordSystem : MonoBehaviour
 
     private double sampleInterval = 0.03f; // 10 ms sample time
     private double nextSampleTime = 0f;
+    private int requiredSwipeStrength = 90000;
+
+    public void Start()
+    {
+        swordAnimator = GetComponent<Animator>();
+    }
 
     public void Update()
     {
@@ -113,25 +123,55 @@ public class PlayerSwordSystem : MonoBehaviour
         // Execute attack
         if (Input.GetMouseButtonUp(0))
         {
-            
             // Execute attack if all points are filled
-            if (cursorPath.IsFilled())
+            if (!cursorPath.IsFilled())
             {
-                CheckMouseMovement();
+                // Clear cursor paths
+                cursorPath.ClearCursorPoints();
+                return;
             }
-            // Clear cursor path
-            cursorPath.ClearCursorPoints();
+
+            // Get attack direction
+            string attackDirection = CheckMouseMovement();
+            if (attackDirection == null)
+            {
+                // No attack
+                cursorPath.ClearCursorPoints();
+                return;
+            }
+
+            Attack(attackDirection);
         }
     }
 
-    private bool CheckMouseMovement()
+    private void Attack(string attackDirection)
     {
-        //Debug.Log($"FILLED, EXEC: {cursorPath}");
-        if (cursorPath.GetAvgMouseVelocity() >= 4000 && cursorPath.GetDistanceTravelled() >= 30)
+        Dictionary<string, string> directionToAnimation = new Dictionary<string, string>
         {
-            Debug.Log("ATTACK!!!!");
+            { "LEFT", "SlashLeft" },
+            { "RIGHT", "SlashRight" },
+            { "UP", "SlashUp" },
+            { "DOWN", "SlashDown" }
+        };
+        // Play attack animation based on attack direction
+        swordAnimator.SetTrigger(directionToAnimation[attackDirection]);
+        // Attack the enemy if in range
+
+    }
+
+    private string CheckMouseMovement()
+    {
+        (string direction, float strength) swipeData = cursorPath.GetSwipeData();
+
+
+        // Attempt to compensate strength
+        if (swipeData.direction == "DOWN" || swipeData.direction == "UP")
+        {
+            swipeData.strength *= 2;
         }
-        return true;
+
+        // Check if attack was done
+        return swipeData.strength >= requiredSwipeStrength ? swipeData.direction : null;
     }
 
     private List<GameObject> GetTargetsInfront(float maxDistance, string tag, float maxAngle = -1)
