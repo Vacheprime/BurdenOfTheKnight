@@ -68,14 +68,13 @@ public class WizardAI : MonoBehaviour
     {
         if (!spellPrefab || !spellSpawn || !player) return;
 
-        GameObject spell = Instantiate(spellPrefab, spellSpawn.position, Quaternion.identity);
+        GameObject spell = Instantiate(spellPrefab, spellSpawn.position, spellSpawn.rotation);
 
-        Vector3 target = player.position + Vector3.up * 1.5f; 
+        Vector3 target = player.position + Vector3.up * 1.5f;
         Vector3 dir = (target - spellSpawn.position);
 
         WizardSpellProjectile proj = spell.GetComponent<WizardSpellProjectile>();
         if (proj != null)
             proj.Fire(dir);
     }
-
 }

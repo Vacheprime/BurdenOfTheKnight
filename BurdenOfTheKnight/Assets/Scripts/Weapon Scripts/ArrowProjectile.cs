@@ -20,17 +20,25 @@ public class ArrowProjectile : MonoBehaviour
     public void Fire(Vector3 dir)
     {
         dir.Normalize();
-        transform.forward = dir;     
+        transform.forward = dir;
         rb.linearVelocity = dir * speed;
+
         Invoke(nameof(Die), lifeTime);
     }
 
-    // void OnTriggerEnter(Collider other)
-    // {
-    //     var hp = other.GetComponent<PlayerHealth>();
-    //     if (hp) hp.TakeDamage(damage);
-    //     Die();
-    // }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (PlayerManager.Instance != null)
+            {
+                PlayerManager.Instance.TakeDamage(damage);
+            }
+
+            Die();
+        }
+    }
+
 
     void Die() => Destroy(gameObject);
 }
