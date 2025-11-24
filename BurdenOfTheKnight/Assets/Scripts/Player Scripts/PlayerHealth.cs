@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
     public float maxHealth = 100f;
     float currentHealth;
@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(float amount)
+    public bool TakeDamage(float amount)
     {
         currentHealth -= amount;
         Debug.Log($"Player took {amount} dmg | HP = {currentHealth}");
@@ -18,7 +18,9 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0f)
         {
             Die();
+            return true;
         }
+        return false;
     }
 
     void Die()
