@@ -8,7 +8,8 @@ public class FirstPersonCamera : MonoBehaviour
     public float sensX;
     public float sensY;
 
-    public GameObject player;
+    //public GameObject player;
+    public Transform orientation;
 
     private float xRotation;
     private float yRotation;
