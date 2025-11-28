@@ -187,7 +187,7 @@ MonoBehaviour:
   detectRange: 18
   stopDistance: 6
   moveSpeed: 5
-  hoverHeight: 3
+  hoverHeight: 2
   verticalLerpSpeed: 5
   shootCooldown: 2
   shootPoint: {fileID: 3240448948489601401}
@@ -206,7 +206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatPoisonProjectile
   damage: 10
-  lifeTime: 25
 --- !u!1 &5580572464872483527
 GameObject:
   m_ObjectHideFlags: 0
