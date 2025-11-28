@@ -105,7 +105,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ad67ea9df4558b498c5c10539ab6327, type: 3}
       propertyPath: m_Name
-      value: Wizard
+      value: WizardEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4ad67ea9df4558b498c5c10539ab6327, type: 3}
+      propertyPath: m_TagString
+      value: Target
       objectReference: {fileID: 0}
     - target: {fileID: 4167280743394806330, guid: 4ad67ea9df4558b498c5c10539ab6327, type: 3}
       propertyPath: m_LocalRotation.w
@@ -139,6 +143,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4ad67ea9df4558b498c5c10539ab6327, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5261341923604101165}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4ad67ea9df4558b498c5c10539ab6327, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -810034366336742745}
   m_SourcePrefab: {fileID: 100100000, guid: 4ad67ea9df4558b498c5c10539ab6327, type: 3}
 --- !u!4 &725497852544519512 stripped
 Transform:
@@ -211,3 +218,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-810034366336742745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2262418245617143745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3672d4bc287aab4db9fc249503a8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100

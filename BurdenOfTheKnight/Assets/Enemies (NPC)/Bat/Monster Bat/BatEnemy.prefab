@@ -108,9 +108,10 @@ GameObject:
   - component: {fileID: 6580641879165509130}
   - component: {fileID: 8836353078669916534}
   - component: {fileID: 2164723274135876060}
+  - component: {fileID: -6954250325945349132}
   m_Layer: 0
   m_Name: BatEnemy
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -206,6 +207,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatPoisonProjectile
   damage: 10
+--- !u!114 &-6954250325945349132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5353256530618019797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3672d4bc287aab4db9fc249503a8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
 --- !u!1 &5580572464872483527
 GameObject:
   m_ObjectHideFlags: 0
