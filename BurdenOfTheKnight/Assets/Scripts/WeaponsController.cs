@@ -8,12 +8,8 @@ using UnityEngine.InputSystem;
 public class WeaponsController : MonoBehaviour
 {
     public GameObject weaponsPanel;
-    public GameObject hudPanel;
     public GameObject spellsPanel;
-    public Button weaponsButton;
-    public Button spellsButton;
     
-
     public void changeToWeaponsPanel() {
         spellsPanel.SetActive(false);
         weaponsPanel.SetActive(true);
