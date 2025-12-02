@@ -7,6 +7,7 @@ public class FirstPersonCamera : MonoBehaviour
     // Mouse sensitivity
     public float sensX;
     public float sensY;
+    public bool isLocked = false;
 
     //public GameObject player;
     public Transform orientation;
@@ -22,6 +23,11 @@ public class FirstPersonCamera : MonoBehaviour
 
     public void LateUpdate()
     {
+        if (isLocked == true)
+        {
+            return;
+        }
+        
         // get mouse input
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;

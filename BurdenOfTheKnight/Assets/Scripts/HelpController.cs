@@ -10,6 +10,7 @@ using System;
 public class HelpController : MonoBehaviour
 {
     public GameObject helpPanel;
+
     // Start button options
     public Button startButton;
     public Button optionsButton;
