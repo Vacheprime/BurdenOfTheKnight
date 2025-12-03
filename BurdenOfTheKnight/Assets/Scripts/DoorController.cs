@@ -8,6 +8,8 @@ public class DoorController : MonoBehaviour
     public float openAngle = 90f;  
     public float speed = 3f;  
     public KeyCode interactKey = KeyCode.E;
+    public AudioSource audioSource;
+    public AudioClip clip;
 
     private bool isOpen = false;
     private float currentAngle = 0f;
@@ -20,6 +22,7 @@ public class DoorController : MonoBehaviour
         if (Input.GetKeyDown(interactKey) && isNear)
         {
             isOpen = !isOpen;
+            audioSource.PlayOneShot(clip);
         }
 
         float targetAngle = isOpen ? openAngle : 0f;

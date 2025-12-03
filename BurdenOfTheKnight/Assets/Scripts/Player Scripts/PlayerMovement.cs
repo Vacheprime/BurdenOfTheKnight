@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 moveDirection;
 
-    Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
 
     private void Start()
     {

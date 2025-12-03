@@ -19,6 +19,14 @@ public class PlayerManager : MonoBehaviour
 
     public Slider healthSlider;
 
+    public AudioSource audioSource;
+    public AudioClip clip;
+    public AudioClip clip2;
+
+    public static bool playerJustRespawned = false;
+
+
+
     public static PlayerManager Instance { get; private set; }
 
     private bool isDead = false;
@@ -48,6 +56,7 @@ public class PlayerManager : MonoBehaviour
         TakeDamage(0);
         SetMagicSpell(0, currentSpellsFill);
     }
+
 
     void Update()
     {    
@@ -88,6 +97,7 @@ public class PlayerManager : MonoBehaviour
             Die();
         }
 
+        audioSource.PlayOneShot(clip);
         currentHealthFill += right;
 
         Vector2 min = healthFill.offsetMin;
@@ -122,5 +132,7 @@ public class PlayerManager : MonoBehaviour
 
         spellsFill.offsetMin = new Vector2(0, min.y);
         spellsFill.offsetMax = new Vector2(currentSpellsFill, max.y);
+        AudioManager.Instance.PlayClip(clip2);
     }
+
 }
