@@ -95,4 +95,9 @@ public class PauseController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(0);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
