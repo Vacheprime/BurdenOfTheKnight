@@ -6423,7 +6423,7 @@ PrefabInstance:
       objectReference: {fileID: 1421472235}
     - target: {fileID: 3049127711003775576, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4909809521257806492, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
       propertyPath: clip
@@ -13945,6 +13945,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   pausePanel: {fileID: 2049533498}
+  settingsPanel: {fileID: 1402713503}
+  hudPanel: {fileID: 1103078987}
   pauseMusicSource: {fileID: 2049533503}
   pauseMusicClip: {fileID: 8300000, guid: 51ebbc8e2f570114bb7b79b5d8ee69cd, type: 3}
 --- !u!1001 &1694840345
@@ -18008,3 +18010,7 @@ SceneRoots:
   - {fileID: 365189890}
   - {fileID: 1701604609}
   - {fileID: 121570231}
+  - {fileID: 865169960}
+  - {fileID: 328282542}
+  - {fileID: 910578971}
+  - {fileID: 1466034748}

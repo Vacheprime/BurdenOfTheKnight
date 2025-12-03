@@ -40,7 +40,7 @@ public class PlayerSwordSystem : MonoBehaviour
         }
 
         // Exit combat mode
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && isInCombat)
         {
             exitCombatMode();
         }
@@ -188,9 +188,7 @@ public class PlayerSwordSystem : MonoBehaviour
                     CameraManager cameraManager = playerCamera.GetComponent<CameraManager>();
                     if (target == null)
                     {
-                        cameraManager.SetMode(CameraMode.FirstPerson);
-                        currentTarget = null;
-                        isInCombat = false;
+                        exitCombatMode();
                         return;
                     }
                     currentTarget = target.GameObject();
