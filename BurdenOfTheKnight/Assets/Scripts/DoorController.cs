@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
+    public Transform player;
+    public float maxDistance = 10.0f;
+    public bool isNear;
     public float openAngle = 90f;  
     public float speed = 3f;  
     public KeyCode interactKey = KeyCode.E;
@@ -11,7 +14,10 @@ public class DoorController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(interactKey))
+        float distance = Vector3.Distance(transform.position, player.position);
+        isNear = distance <= maxDistance;
+
+        if (Input.GetKeyDown(interactKey) && isNear)
         {
             isOpen = !isOpen;
         }
