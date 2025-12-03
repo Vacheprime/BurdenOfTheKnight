@@ -31,7 +31,7 @@ public class SkeletonArcherAI : MonoBehaviour
         } else {
             agent.isStopped = false;
         }
-        if (anim) anim.SetFloat("Speed", agent.velocity.magnitude);
+        if (anim) anim.SetFloat("Speed", agent.velocity.magnitude, 0.1f, Time.deltaTime);
     }
 
     void Shoot()

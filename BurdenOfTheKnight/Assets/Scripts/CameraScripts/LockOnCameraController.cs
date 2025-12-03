@@ -12,17 +12,12 @@ public class LockOnCameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        RotateToTarget();
+        RotateCameraToTarget();
     }
 
-    private void RotateToTarget()
+    private void RotateCameraToTarget()
     {
-        // Create a modified target transform to block X and Z rotations
-        Vector3 modTargetPos = target.position;
-        modTargetPos.y = player.transform.position.y;
-
-        player.transform.LookAt(modTargetPos);
-        transform.LookAt(target);
+        transform.parent.LookAt(target);
     }
 
     public void SetTarget(Transform target)
