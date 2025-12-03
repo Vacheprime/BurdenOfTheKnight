@@ -7,22 +7,23 @@ public class WizardAI : MonoBehaviour
     public float attackRange = 12f;
     public float shootCooldown = 2.0f;
 
-    public Transform spellSpawn;     
-    public GameObject spellPrefab;   
+    public Transform spellSpawn;
+    public GameObject spellPrefab;
+    public Animator animator;
 
     NavMeshAgent agent;
     Transform player;
-    Animator anim;
     float nextShot;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        anim  = GetComponent<Animator>();
+        agent.updateRotation = true;
+
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        if (player == null)
-            Debug.LogError("WizardAI: No object with tag 'Player' found!");
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -37,7 +38,9 @@ public class WizardAI : MonoBehaviour
             {
                 agent.isStopped = false;
                 agent.SetDestination(player.position);
-                if (anim) anim.SetFloat("Speed", agent.velocity.magnitude);
+
+                if (animator)
+                    animator.SetFloat("Speed", agent.velocity.magnitude);
             }
             else
             {
@@ -54,13 +57,16 @@ public class WizardAI : MonoBehaviour
                     nextShot = Time.time + shootCooldown;
                 }
 
-                if (anim) anim.SetTrigger("Cast");
+                if (animator)
+                    animator.SetTrigger("Cast");
             }
         }
         else
         {
             agent.isStopped = true;
-            if (anim) anim.SetFloat("Speed", 0f);
+
+            if (animator)
+                animator.SetFloat("Speed", 0f);
         }
     }
 
@@ -68,10 +74,14 @@ public class WizardAI : MonoBehaviour
     {
         if (!spellPrefab || !spellSpawn || !player) return;
 
-        GameObject spell = Instantiate(spellPrefab, spellSpawn.position, spellSpawn.rotation);
-
         Vector3 target = player.position + Vector3.up * 1.5f;
-        Vector3 dir = (target - spellSpawn.position);
+        Vector3 dir = (target - spellSpawn.position).normalized;
+
+        GameObject spell = Instantiate(
+            spellPrefab,
+            spellSpawn.position,
+            Quaternion.LookRotation(dir)
+        );
 
         WizardSpellProjectile proj = spell.GetComponent<WizardSpellProjectile>();
         if (proj != null)
