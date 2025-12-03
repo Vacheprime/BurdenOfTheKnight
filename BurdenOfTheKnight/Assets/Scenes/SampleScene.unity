@@ -5832,39 +5832,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723934334}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &733197176 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 702813525320841597, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
-  m_PrefabInstance: {fileID: 775643629}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &733197177 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6690922848948503058, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
   m_PrefabInstance: {fileID: 775643629}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &733197178
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733197176}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.38
-  m_Height: 2.23
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &743103963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6105,17 +6077,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7903329478940772435, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903329478940772435, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.649
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903329478940772435, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673256240310578573, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: m_Height
+      value: 2.25
+      objectReference: {fileID: 0}
     - target: {fileID: 8673256240310578573, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
       propertyPath: m_Radius
-      value: 1.24
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673256240310578573, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 702813525320841597, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 733197178}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
 --- !u!1 &791367688 stripped
 GameObject:
@@ -8648,7 +8637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb33018460053c040b07aa164844927f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorController
-  player: {fileID: 733197177}
+  player: {fileID: 1273845226}
   maxDistance: 4
   isNear: 0
   openAngle: 90
@@ -9930,6 +9919,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7866a1a6a246d84dbd7e8b00fcfdc59, type: 3}
+--- !u!4 &1273845226 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5174470876505582945, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+  m_PrefabInstance: {fileID: 775643629}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1274134925
 PrefabInstance:
   m_ObjectHideFlags: 0
