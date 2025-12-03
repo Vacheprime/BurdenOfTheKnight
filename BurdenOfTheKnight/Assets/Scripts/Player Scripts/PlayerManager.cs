@@ -55,6 +55,12 @@ public class PlayerManager : MonoBehaviour
     {
         TakeDamage(0);
         SetMagicSpell(0, currentSpellsFill);
+        // Play respawn sound
+        if (playerJustRespawned)
+        {
+            audioSource.PlayOneShot(clip2);
+            playerJustRespawned = false;
+        }
     }
 
 
@@ -87,6 +93,7 @@ public class PlayerManager : MonoBehaviour
     private void Die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        AudioManager.Instance.PlayClip(clip2);
     }
 
     public void TakeDamage(float right)
