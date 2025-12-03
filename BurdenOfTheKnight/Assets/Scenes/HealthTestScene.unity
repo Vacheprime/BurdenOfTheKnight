@@ -471,6 +471,10 @@ PrefabInstance:
       propertyPath: spellsFill
       value: 
       objectReference: {fileID: 1417392286}
+    - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: currentSpellsFill
+      value: -300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
