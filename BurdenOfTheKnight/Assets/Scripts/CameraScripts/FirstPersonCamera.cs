@@ -7,6 +7,7 @@ public class FirstPersonCamera : MonoBehaviour
     // Mouse sensitivity
     public float sensX;
     public float sensY;
+    public bool isLocked = false;
 
     public Transform playerTransform;
 
