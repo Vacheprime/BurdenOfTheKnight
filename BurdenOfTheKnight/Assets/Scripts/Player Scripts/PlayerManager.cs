@@ -31,6 +31,14 @@ public class PlayerManager : MonoBehaviour
 
     private bool isDead = false;
 
+    // ======TEST============
+    public RectTransform healthFill;
+    public RectTransform spellsFill;
+    public float currentHealthFill = 0f;
+    public float currentSpellsFill = -300f;
+    public float minFill = 300f;
+    //=======================
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -45,28 +53,13 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        magicPoints = 100;
-        SetMagicPoints(magicPoints);
-
-        currentHealth = maxHealth;
-
-        if (healthSlider != null)
-        {
-            healthSlider.maxValue = maxHealth;
-            healthSlider.value = maxHealth;
-        }
-
-        // Play respawn sound
-        if (playerJustRespawned)
-        {
-            audioSource.PlayOneShot(clip2);
-            playerJustRespawned = false;
-        }
+        TakeDamage(0);
+        SetMagicSpell(0, currentSpellsFill);
     }
 
 
     void Update()
-    {
+    {    
         CalculateMagicPoints();
     }
 
@@ -74,19 +67,54 @@ public class PlayerManager : MonoBehaviour
 
     public bool CastTestMagic()
     {
-        if (magicPoints > 15)
+        if (currentSpellsFill > -250)
         {
-            magicPoints -= 15;
+            currentSpellsFill -= 15;
             return true;
         }
         return false;
     }
 
-    public void SetMagicPoints(float points)
+     public void SetHealth(float points)
     {
-        magicPoints = Mathf.Clamp(points, 0, 100);
-        if (magicSlider != null)
-            magicSlider.value = magicPoints;
+        currentHealth = Mathf.Clamp(points, 0, maxHealth);
+
+        if (healthSlider != null)
+            healthSlider.value = currentHealth;
+    }
+
+
+    private void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void TakeDamage(float right)
+    {
+        if (currentHealthFill >= 300f)
+        {
+            isDead = true;
+            Die();
+        }
+
+        audioSource.PlayOneShot(clip);
+        currentHealthFill += right;
+
+        Vector2 min = healthFill.offsetMin;
+        Vector2 max = healthFill.offsetMax;
+
+        healthFill.offsetMin = new Vector2(0, min.y);
+        healthFill.offsetMax = new Vector2(-currentHealthFill, max.y);
+    }
+
+    public void SetMagicSpell(float left, float right)
+    {
+        
+        Vector2 min = spellsFill.offsetMin;
+        Vector2 max = spellsFill.offsetMax;
+
+        spellsFill.offsetMin = new Vector2(left, min.y);
+        spellsFill.offsetMax = new Vector2(-right, max.y);
     }
 
     public void CalculateMagicPoints()
@@ -96,41 +124,15 @@ public class PlayerManager : MonoBehaviour
         if (loudness < threshold) loudness = 0;
         else if (loudness > 20) loudness = 20;
 
-        magicPoints += loudness / 1500f;
-        if (magicPoints > 100) magicPoints = 100;
+        currentSpellsFill += loudness / 8;
+        if (currentSpellsFill >= 0) currentSpellsFill = 0;
 
-        SetMagicPoints(magicPoints);
-    }
+        Vector2 min = spellsFill.offsetMin;
+        Vector2 max = spellsFill.offsetMax;
 
-    public void TakeDamage(float amount)
-    {
-        if (isDead) return;
-
-        currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        audioSource.PlayOneShot(clip);
-
-        SetHealth(currentHealth);
-
-        if (currentHealth <= 0f)
-        {
-            isDead = true;
-            Die();
-        }
-    }
-
-    public void SetHealth(float points)
-    {
-        currentHealth = Mathf.Clamp(points, 0, maxHealth);
-
-        if (healthSlider != null)
-            healthSlider.value = currentHealth;
-    }
-
-    private void Die()
-    {
+        spellsFill.offsetMin = new Vector2(0, min.y);
+        spellsFill.offsetMax = new Vector2(currentSpellsFill, max.y);
         AudioManager.Instance.PlayClip(clip2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }

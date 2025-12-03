@@ -5,7 +5,7 @@ public class ArrowProjectile : MonoBehaviour
 {
     public float speed = 30f;
     public float lifeTime = 5f;
-    public float damage = 10f;
+    public float damage = 20f;
 
     Rigidbody rb;
 
