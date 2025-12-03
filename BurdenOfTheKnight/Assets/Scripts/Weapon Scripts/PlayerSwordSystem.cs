@@ -313,6 +313,13 @@ public class PlayerSwordSystem : MonoBehaviour
             return null;
         }
 
+        // Get the sword target if possible
+        Transform swordTarget = nextTarget.transform.Find("SwordTarget");
+        if (swordTarget != null)
+        {
+            
+        }
+
         // Return nearest to center
         return nextTarget.transform;
     }
