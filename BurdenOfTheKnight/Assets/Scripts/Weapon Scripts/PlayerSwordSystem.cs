@@ -22,6 +22,10 @@ public class PlayerSwordSystem : MonoBehaviour
     private double nextSampleTime = 0f;
     private int requiredSwipeStrength = 90000;
 
+    public AudioSource swordAudioSource;
+    public AudioClip swordSwingClip;
+
+
     public void Start()
     {
         swordAnimator = GetComponent<Animator>();
@@ -36,7 +40,7 @@ public class PlayerSwordSystem : MonoBehaviour
         }
 
         // Exit combat mode
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && isInCombat)
         {
             exitCombatMode();
         }
@@ -52,7 +56,8 @@ public class PlayerSwordSystem : MonoBehaviour
     {
         // Get target
         Transform target = GetNextTarget();
-        if (target == null) {
+        if (target == null)
+        {
             return; // No target, 
         }
         // Set current target
@@ -60,6 +65,8 @@ public class PlayerSwordSystem : MonoBehaviour
 
         // Start combat
         isInCombat = true;
+        MusicManager.Instance.PlayCombatMusic();
+
 
         // Set camera mode to lock on
         CameraManager camManager = playerCamera.GetComponent<CameraManager>();
@@ -70,6 +77,8 @@ public class PlayerSwordSystem : MonoBehaviour
     {
         // End combat
         isInCombat = false;
+        MusicManager.Instance.PlayExplorationMusic();
+
 
         // Set camera mode to First Person
         CameraManager camManager = playerCamera.GetComponent<CameraManager>();
@@ -160,6 +169,7 @@ public class PlayerSwordSystem : MonoBehaviour
 
         // Play attack animation based on attack direction
         swordAnimator.SetTrigger(directionToAnimation[attackDirection]);
+        swordAudioSource.PlayOneShot(swordSwingClip);
 
         // Attack the enemy if in range
         if (Vector3.Distance(player.transform.position, currentTarget.transform.position) <= attackRange)
@@ -174,13 +184,11 @@ public class PlayerSwordSystem : MonoBehaviour
                 bool hasDied = targetHealth.TakeDamage(attackDamage);
                 if (hasDied)
                 {
-                    
+
                     CameraManager cameraManager = playerCamera.GetComponent<CameraManager>();
                     if (target == null)
                     {
-                        cameraManager.SetMode(CameraMode.FirstPerson);
-                        currentTarget = null;
-                        isInCombat = false;
+                        exitCombatMode();
                         return;
                     }
                     currentTarget = target.GameObject();
@@ -252,12 +260,13 @@ public class PlayerSwordSystem : MonoBehaviour
             {
                 closestTarget = a;
                 closestDistance = distanceA;
-            } else if (distanceB < distanceA)
+            }
+            else if (distanceB < distanceA)
             {
                 closestTarget = b;
                 closestDistance = distanceB;
             }
-            
+
             if (closestTarget != null)
             {
                 if (closestDistance < 3)
@@ -300,7 +309,8 @@ public class PlayerSwordSystem : MonoBehaviour
             List<GameObject> targets = GetTargetsInfront(10, "Target");
 
             // If only one target, then its already selected
-            if (targets.Count == 1) {
+            if (targets.Count == 1)
+            {
                 return null;
             }
 
@@ -322,3 +332,4 @@ public class PlayerSwordSystem : MonoBehaviour
         exitCombatMode();
     }
 }
+

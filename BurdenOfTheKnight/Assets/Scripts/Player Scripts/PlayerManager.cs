@@ -19,6 +19,14 @@ public class PlayerManager : MonoBehaviour
 
     public Slider healthSlider;
 
+    public AudioSource audioSource;
+    public AudioClip clip;
+    public AudioClip clip2;
+
+    public static bool playerJustRespawned = false;
+
+
+
     public static PlayerManager Instance { get; private set; }
 
     private bool isDead = false;
@@ -47,7 +55,15 @@ public class PlayerManager : MonoBehaviour
             healthSlider.maxValue = maxHealth;
             healthSlider.value = maxHealth;
         }
+
+        // Play respawn sound
+        if (playerJustRespawned)
+        {
+            audioSource.PlayOneShot(clip2);
+            playerJustRespawned = false;
+        }
     }
+
 
     void Update()
     {
@@ -92,6 +108,7 @@ public class PlayerManager : MonoBehaviour
 
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        audioSource.PlayOneShot(clip);
 
         SetHealth(currentHealth);
 
@@ -112,6 +129,8 @@ public class PlayerManager : MonoBehaviour
 
     private void Die()
     {
+        AudioManager.Instance.PlayClip(clip2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
 }

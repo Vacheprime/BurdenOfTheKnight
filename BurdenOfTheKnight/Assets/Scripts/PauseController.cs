@@ -8,6 +8,10 @@ public class PauseController : MonoBehaviour
     public GameObject hudPanel;
     public static bool isPaused = false;
 
+    [Header("Pause Music")]
+    public AudioSource pauseMusicSource;   // assign in Inspector
+    public AudioClip pauseMusicClip;       // assign in Inspector
+
     private CursorLockMode previousLockMode = CursorLockMode.None;
     private bool previousVisibility = false;
 
@@ -15,15 +19,21 @@ public class PauseController : MonoBehaviour
     void Start()
     {
         pausePanel.SetActive(false);
+
+        if (pauseMusicSource != null)
+        {
+            pauseMusicSource.clip = pauseMusicClip;
+            pauseMusicSource.loop = true;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
         {
             Pause();
-        } else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
         {
             Resume();
         }
@@ -41,6 +51,9 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
 
+        // Play pause music
+        if (pauseMusicSource != null && pauseMusicClip != null)
+            pauseMusicSource.Play();
         // Set the cursor states
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -66,11 +79,14 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
+        // Pause the pause music
+        if (pauseMusicSource != null)
+            pauseMusicSource.Pause();
         // Put back the cursor to previous state.
         Cursor.visible = previousVisibility;
         Cursor.lockState = previousLockMode;
     }
-    
+
     public void MainMenu()
     {
         Time.timeScale = 1f;
