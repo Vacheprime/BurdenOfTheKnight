@@ -3607,6 +3607,7 @@ GameObject:
   - component: {fileID: 441026880}
   - component: {fileID: 441026882}
   - component: {fileID: 441026881}
+  - component: {fileID: 441026883}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -3688,6 +3689,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &441026883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441026879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f16cb4828cd5c48b9ce3244d8ada90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstPersonCamera
+  sensX: 0
+  sensY: 0
+  isLocked: 0
+  playerTransform: {fileID: 1998570200}
 --- !u!4 &451143535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8923055675592660757, guid: e7866a1a6a246d84dbd7e8b00fcfdc59, type: 3}
@@ -8632,7 +8649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorController
   player: {fileID: 1998570200}
-  maxDistance: 2
+  maxDistance: 4
   isNear: 0
   openAngle: 90
   speed: 3
@@ -10300,7 +10317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1321650907
 Light:
   m_ObjectHideFlags: 0
@@ -13212,7 +13229,7 @@ GameObject:
   - component: {fileID: 1720562695}
   - component: {fileID: 1720562696}
   m_Layer: 0
-  m_Name: DoorPivot (1)
+  m_Name: DoorPivot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13247,7 +13264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorController
   player: {fileID: 1998570200}
-  maxDistance: 2
+  maxDistance: 4
   isNear: 0
   openAngle: 90
   speed: 3
@@ -14109,7 +14126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1826437325
 MonoBehaviour:
   m_ObjectHideFlags: 0
