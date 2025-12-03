@@ -9,7 +9,8 @@ public class PlayerSwordSystem : MonoBehaviour
     public GameObject player;
     public GameObject playerCamera;
 
-    public float attackRange = 2f;
+    public float attackRange = 4f;
+    public float attackDamage = 40f;
 
     private Animator swordAnimator;
     private bool isInCombat = false;
@@ -54,6 +55,8 @@ public class PlayerSwordSystem : MonoBehaviour
         if (target == null) {
             return; // No target, 
         }
+        // Set current target
+        currentTarget = target.GameObject();
 
         // Start combat
         isInCombat = true;
@@ -85,6 +88,7 @@ public class PlayerSwordSystem : MonoBehaviour
             Transform target = GetNextTarget();
             if (target != null)
             {
+                currentTarget = target.GameObject();
                 CameraManager cameraManager = playerCamera.GetComponent<CameraManager>();
                 cameraManager.SetMode(CameraMode.LockOn, target);
             }
@@ -153,16 +157,46 @@ public class PlayerSwordSystem : MonoBehaviour
             { "UP", "SlashUp" },
             { "DOWN", "SlashDown" }
         };
+
         // Play attack animation based on attack direction
         swordAnimator.SetTrigger(directionToAnimation[attackDirection]);
-        // Attack the enemy if in range
 
+        // Attack the enemy if in range
+        if (Vector3.Distance(player.transform.position, currentTarget.transform.position) <= attackRange)
+        {
+            // Get the damageable interface for target
+            IDamageable targetHealth = currentTarget.GetComponent<IDamageable>();
+            if (targetHealth != null)
+            {
+                // Get next target
+                Transform target = GetNextTarget();
+                // Damage
+                bool hasDied = targetHealth.TakeDamage(attackDamage);
+                if (hasDied)
+                {
+                    
+                    CameraManager cameraManager = playerCamera.GetComponent<CameraManager>();
+                    if (target == null)
+                    {
+                        cameraManager.SetMode(CameraMode.FirstPerson);
+                        currentTarget = null;
+                        isInCombat = false;
+                        return;
+                    }
+                    currentTarget = target.GameObject();
+                    cameraManager.SetMode(CameraMode.LockOn, target);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("The gameObject tagged with the enemy tag does not have a health component implementing the IDamageable interface.");
+            }
+        }
     }
 
     private string CheckMouseMovement()
     {
         (string direction, float strength) swipeData = cursorPath.GetSwipeData();
-
 
         // Attempt to compensate strength
         if (swipeData.direction == "DOWN" || swipeData.direction == "UP")
@@ -279,10 +313,12 @@ public class PlayerSwordSystem : MonoBehaviour
             return null;
         }
 
-        // Set current target
-        currentTarget = nextTarget;
-
         // Return nearest to center
         return nextTarget.transform;
+    }
+
+    public void OnDisable()
+    {
+        exitCombatMode();
     }
 }
