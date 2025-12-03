@@ -132,7 +132,6 @@ public class PlayerManager : MonoBehaviour
 
         spellsFill.offsetMin = new Vector2(0, min.y);
         spellsFill.offsetMax = new Vector2(currentSpellsFill, max.y);
-        AudioManager.Instance.PlayClip(clip2);
     }
 
 }
