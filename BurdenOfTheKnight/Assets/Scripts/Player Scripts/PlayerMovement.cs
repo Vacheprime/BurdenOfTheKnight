@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
             rb.linearDamping = 0f;
         }
         
-        RotateToCamera();
+        //RotateToCamera();
     }
 
     private void FixedUpdate()
