@@ -6,9 +6,9 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource source;
 
-    void Awake()
+    private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
@@ -17,13 +17,17 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        source = gameObject.AddComponent<AudioSource>();
-        source.playOnAwake = false;
+        source = GetComponent<AudioSource>();
+        if (source == null)
+        {
+            source = gameObject.AddComponent<AudioSource>();
+            source.playOnAwake = false;
+        }
     }
 
     public void PlayClip(AudioClip clip)
     {
-        if (clip != null)
-            source.PlayOneShot(clip);
+        if (clip == null || source == null) return;
+        source.PlayOneShot(clip);
     }
 }

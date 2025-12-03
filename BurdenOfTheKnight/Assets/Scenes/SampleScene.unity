@@ -1016,6 +1016,7 @@ GameObject:
   - component: {fileID: 121570231}
   - component: {fileID: 121570230}
   - component: {fileID: 121570232}
+  - component: {fileID: 121570233}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -1066,6 +1067,18 @@ MonoBehaviour:
   explorationMusic: {fileID: 8300000, guid: 39e64abebab00a448be43d2afdfc7587, type: 3}
   combatMusic: {fileID: 8300000, guid: 03ea4fd1b27fbf1429572c1259fa4d54, type: 3}
   fadeDuration: 1
+--- !u!114 &121570233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121570229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84380f60166fb344b56a1d32117e207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManagerObject
 --- !u!4 &134266859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8923055675592660757, guid: e7866a1a6a246d84dbd7e8b00fcfdc59, type: 3}
