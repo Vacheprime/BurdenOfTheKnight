@@ -20,21 +20,31 @@ public class FirstPersonCamera : MonoBehaviour
     }
 
 
-    public void Update()
+    void Update()
     {
-        // get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        // Read mouse input
+        float mouseX = Input.GetAxisRaw("Mouse X") * sensX * Time.deltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY * Time.deltaTime;
 
-        yRotation += mouseX;
+        // Calculate rotation
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        
-        // rotate camera
-        transform.parent.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        // rotate player according to camera
-        playerTransform.rotation = Quaternion.Euler(0, transform.parent.eulerAngles.y, 0);
+        yRotation += mouseX;
+
+        // Apply rotation to the camera
+        transform.localRotation = Quaternion.Euler(xRotation, yRotation, transform.localEulerAngles.z);
+
+        // Calculate player rotation
+        Vector3 forward = transform.forward;
+        forward.y = 0f;
+
+        if (forward.sqrMagnitude > 0.0001f)
+        {
+            Quaternion lookYaw = Quaternion.LookRotation(forward);
+            // apply only Y rotation to player
+            playerTransform.rotation = Quaternion.Euler(0f, lookYaw.eulerAngles.y, 0f);
+        }
     }
 
     public void OnEnable()
