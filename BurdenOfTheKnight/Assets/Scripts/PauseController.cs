@@ -5,19 +5,29 @@ public class NewMonoBehaviourScript : MonoBehaviour
 {
     public GameObject pausePanel;
     public static bool isPaused = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Header("Pause Music")]
+    public AudioSource pauseMusicSource;   // assign in Inspector
+    public AudioClip pauseMusicClip;       // assign in Inspector
+
     void Start()
     {
         pausePanel.SetActive(false);
+
+        if (pauseMusicSource != null)
+        {
+            pauseMusicSource.clip = pauseMusicClip;
+            pauseMusicSource.loop = true;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
         {
             Pause();
-        } else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
         {
             Resume();
         }
@@ -28,6 +38,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+
+        // Play pause music
+        if (pauseMusicSource != null && pauseMusicClip != null)
+            pauseMusicSource.Play();
     }
 
     public void Resume()
@@ -35,8 +49,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+
+        // Pause the pause music
+        if (pauseMusicSource != null)
+            pauseMusicSource.Pause();
     }
-    
+
     public void MainMenu()
     {
         Time.timeScale = 1f;

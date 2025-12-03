@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ThrowingController : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class ThrowingController : MonoBehaviour
     public Transform cam;
     public Transform attackPoint;
     public GameObject objectToThrow;
+    public AudioSource audioSource;
+    public AudioClip clip;
+
 
     [Header("Settings")]
     public int totalThrows;
@@ -58,6 +62,8 @@ public class ThrowingController : MonoBehaviour
         {
             forceDirection = (hit.point - attackPoint.position).normalized;
         }
+
+        audioSource.PlayOneShot(clip);
 
         // add force
         Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwUpwardForce; 
