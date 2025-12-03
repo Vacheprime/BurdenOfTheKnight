@@ -5,6 +5,8 @@ using UnityEngine;
 public class TempMagicScript : MonoBehaviour
 {
     public float attackDamage = 30;
+    public AudioSource audioSource;
+    public AudioClip clip;
 
     void OnCollisionEnter(Collision collision)
     {
