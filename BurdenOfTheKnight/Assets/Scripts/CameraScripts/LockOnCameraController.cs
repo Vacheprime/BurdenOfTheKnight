@@ -27,6 +27,13 @@ public class LockOnCameraController : MonoBehaviour
 
     public void SetTarget(Transform target)
     {
+        // Get the actual target if possible
+        Transform swordTarget = target.Find("SwordTarget");
+        if (swordTarget != null)
+        {
+            target = swordTarget;
+        }
+
         this.target = target;
     }
 
