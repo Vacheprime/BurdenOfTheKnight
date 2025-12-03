@@ -67,7 +67,10 @@ public class OptionsController : MonoBehaviour
         controlsCenter.SetActive(false);
         keyboardPanel.SetActive(true);
     }
-    
-    
 
+     public void Quit()
+    {
+        Application.Quit();
+    }
+    
 }
