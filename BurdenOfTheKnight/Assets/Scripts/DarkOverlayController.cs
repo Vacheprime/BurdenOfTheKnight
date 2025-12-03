@@ -1,10 +1,10 @@
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
-
 public class NewBehaviourScript : MonoBehaviour
 {
     public Image darkOverlay;
@@ -26,7 +26,7 @@ public class NewBehaviourScript : MonoBehaviour
     public void DarkenScreen()
     {
         darkOverlay.gameObject.SetActive(true);
-        StartCoroutine(FadeIn(darkOverlay, 0.5f)); // 0.5s fade duration
+        StartCoroutine(FadeIn(darkOverlay, 1f));
         StartCoroutine(MoveTitle());
     }
 
@@ -47,6 +47,8 @@ public class NewBehaviourScript : MonoBehaviour
 
         c.a = 1f;
         img.color = c;
+        // SceneManagement.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private IEnumerator MoveTitle()
