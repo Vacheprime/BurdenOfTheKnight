@@ -20,7 +20,8 @@ public class WizardSpellProjectile : MonoBehaviour
     public void Fire(Vector3 dir)
     {
         dir.Normalize();
-        transform.forward = dir;
+
+        transform.rotation = Quaternion.LookRotation(dir);
         rb.linearVelocity = dir * speed;
 
         CancelInvoke();
@@ -32,9 +33,7 @@ public class WizardSpellProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (PlayerManager.Instance != null)
-            {
                 PlayerManager.Instance.TakeDamage(damage);
-            }
         }
     }
 
