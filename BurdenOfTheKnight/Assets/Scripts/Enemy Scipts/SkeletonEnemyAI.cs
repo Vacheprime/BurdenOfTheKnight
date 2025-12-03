@@ -37,15 +37,7 @@ public class SkeletonEnemyAI : MonoBehaviour
         if (chasing)
         {
             agent.stoppingDistance = stopDistance;
-
-            if (d > stopDistance)
-            {
-                agent.SetDestination(player.position);
-            }
-            else
-            {
-                agent.ResetPath();
-            }
+            agent.SetDestination(player.position);
         }
         else
         {
