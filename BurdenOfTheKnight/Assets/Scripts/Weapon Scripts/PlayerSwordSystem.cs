@@ -198,6 +198,7 @@ public class PlayerSwordSystem : MonoBehaviour
     {
         (string direction, float strength) swipeData = cursorPath.GetSwipeData();
 
+
         // Attempt to compensate strength
         if (swipeData.direction == "DOWN" || swipeData.direction == "UP")
         {
@@ -315,10 +316,5 @@ public class PlayerSwordSystem : MonoBehaviour
 
         // Return nearest to center
         return nextTarget.transform;
-    }
-
-    public void OnDisable()
-    {
-        exitCombatMode();
     }
 }
