@@ -3,12 +3,15 @@ using UnityEngine.AI;
 
 public class WizardAI : MonoBehaviour
 {
+    [Header("Detection & Attack")]
     public float detectRange = 18f;
     public float attackRange = 12f;
     public float shootCooldown = 2.0f;
 
+    [Header("Fireball Prefab")]
     public Transform spellSpawn;
     public GameObject spellPrefab;
+
     public Animator animator;
 
     NavMeshAgent agent;
@@ -36,6 +39,7 @@ public class WizardAI : MonoBehaviour
         {
             if (dist > attackRange)
             {
+                // Move toward player
                 agent.isStopped = false;
                 agent.SetDestination(player.position);
 
@@ -44,6 +48,7 @@ public class WizardAI : MonoBehaviour
             }
             else
             {
+                // Stop and attack
                 agent.isStopped = true;
 
                 Vector3 look = player.position - transform.position;
@@ -63,8 +68,8 @@ public class WizardAI : MonoBehaviour
         }
         else
         {
+            // Idle
             agent.isStopped = true;
-
             if (animator)
                 animator.SetFloat("Speed", 0f);
         }
@@ -77,13 +82,15 @@ public class WizardAI : MonoBehaviour
         Vector3 target = player.position + Vector3.up * 1.5f;
         Vector3 dir = (target - spellSpawn.position).normalized;
 
+        // Spawn fireball prefab
         GameObject spell = Instantiate(
             spellPrefab,
             spellSpawn.position,
             Quaternion.LookRotation(dir)
         );
 
-        WizardSpellProjectile proj = spell.GetComponent<WizardSpellProjectile>();
+        // Fire the projectile
+        FireballProjectile proj = spell.GetComponent<FireballProjectile>();
         if (proj != null)
             proj.Fire(dir);
     }

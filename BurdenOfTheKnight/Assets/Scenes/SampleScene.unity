@@ -6443,6 +6443,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1421472235}
+    - target: {fileID: 4909809521257806492, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: objectToThrow
+      value: 
+      objectReference: {fileID: 655808670377112328, guid: c7e9a7666b3d236448378ce4a90ceccc, type: 3}
     - target: {fileID: 6690922848948503058, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.764
