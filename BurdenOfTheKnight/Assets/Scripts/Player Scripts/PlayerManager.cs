@@ -145,4 +145,14 @@ public class PlayerManager : MonoBehaviour
     {
         SetHealth(currentHealth + healthAmount);
     }
+
+    public void SetMicSensitivity(float value)
+    {
+        loudnessSensitivity = Mathf.Clamp(value, 10f, 200f);
+    }
+
+    public float GetLoudnessSensitivity()
+    {
+        return loudnessSensitivity;
+    }
 }
