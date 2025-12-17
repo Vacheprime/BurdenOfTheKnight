@@ -16,4 +16,13 @@ public class CollectibleConrtoller : MonoBehaviour
     {
         transform.Rotate(speed * 5f * Time.deltaTime);
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerManager.Instance.IncreaseHealth(5.0f);
+            Destroy(this.gameObject);
+        }
+    }
 }

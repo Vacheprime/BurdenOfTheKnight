@@ -141,4 +141,8 @@ public class PlayerManager : MonoBehaviour
         spellsFill.offsetMax = new Vector2(currentSpellsFill, max.y);
     }
 
+    public void IncreaseHealth(float healthAmount)
+    {
+        SetHealth(currentHealth + healthAmount);
+    }
 }
