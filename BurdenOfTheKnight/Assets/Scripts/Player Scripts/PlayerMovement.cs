@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
-    [HideInInspector] public Rigidbody rb;
+    public Rigidbody rb;
 
     private void Start()
     {
