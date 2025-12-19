@@ -21,7 +21,8 @@ public class CollectibleConrtoller : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerManager.Instance.IncreaseHealth(5.0f);
+            Debug.Log("TOUCH");
+            PlayerManager.Instance.IncreaseHealth(50.0f);
             Destroy(this.gameObject);
         }
     }

@@ -1,27 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
-
-    public float groundDrag;
-
-    [Header("Ground Check")]
-    public float playerHeight;
-    public LayerMask whatIsGround;
-    bool grounded;
-
-    public Transform cameraPivotTransform;
+    public float moveSpeed = 5f;
+    private float speedMultiplier = 1f;
 
     float horizontalInput;
     float verticalInput;
 
-    Vector3 moveDirection;
-
-    [HideInInspector] public Rigidbody rb;
+    public Rigidbody rb;
 
     private void Start()
     {
@@ -31,24 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        
-        // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
-        MyInput();
-        SpeedControl();
-
-        //handle drag
-        if (grounded)
-        {
-            rb.linearDamping = groundDrag; 
-        }
-        else
-        {
-            rb.linearDamping = 0f;
-        }
-        
-        //RotateToCamera();
+        GetInput();
     }
 
     private void FixedUpdate()
@@ -56,41 +30,53 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
-    private void MyInput()
+    private void GetInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            // Increase speed
+            speedMultiplier = 1.5f;
+        } else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            // Reset
+            speedMultiplier = 1f;
+        }
     }
 
     private void MovePlayer()
     {
-        // calculate movement direction
-        moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-    }
+        // Preserve gravity / jumping 
+        float yVelocity = rb.linearVelocity.y;
 
-    private void SpeedControl()
-    {
-        Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        // Build input vector (magnitude = stick amount)
+        Vector3 input = new Vector3(horizontalInput, 0f, verticalInput);
 
-        // limit velocity if needed
-        if (flatVel.magnitude > moveSpeed)
+        // Clamp diagonal magnitude
+        input = Vector3.ClampMagnitude(input, 1f);
+
+        if (input.sqrMagnitude == 0f)
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            if (Input.GetButton("Left Shift"))
-            {
-                rb.linearVelocity = new Vector3(limitedVel.x * 2, rb.linearVelocity.y, limitedVel.z * 2);
-            }
-            else
-            {
-                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
-            }
+            // Immediate stop
+            rb.linearVelocity = new Vector3(0f, yVelocity, 0f);
+            return;
         }
-    }
 
-    private void RotateToCamera()
-    {
-        // Get y rotation
-        transform.rotation = Quaternion.Euler(0, cameraPivotTransform.eulerAngles.y, 0);
+        // Direction-relative movement (player forward/right)
+        Vector3 moveDir =
+            transform.forward * input.z +
+            transform.right * input.x;
+
+        // Constant speed scaled by joystick magnitude
+        Vector3 velocity =
+            moveDir.normalized * (moveSpeed * speedMultiplier * input.magnitude);
+
+        rb.linearVelocity = new Vector3(
+            velocity.x,
+            yVelocity,
+            velocity.z
+        );
     }
 }
