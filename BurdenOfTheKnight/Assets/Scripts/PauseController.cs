@@ -1,12 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
 public class PauseController : MonoBehaviour
 {
+    public GameObject canvas;
     public GameObject pausePanel;
     public GameObject settingsPanel;
+    public GameObject controlsCenter;
+    public GameObject micCenter;
     public GameObject hudPanel;
     public static bool isPaused = false;
+    public Button controlsButton;
 
     [Header("Pause Music")]
     public AudioSource pauseMusicSource;   // assign in Inspector
@@ -61,14 +67,30 @@ public class PauseController : MonoBehaviour
 
     public void OpenSettings()
     {
+        canvas.SetActive(true);
         pausePanel.SetActive(false);
-        settingsPanel.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(controlsButton.gameObject);
+        ControlsCenterButton();
     }
 
     public void CloseSettings()
     {
-        settingsPanel.SetActive(false);
+        canvas.SetActive(false);
+
         pausePanel.SetActive(true);
+    }
+
+    public void OpenMicSettings()
+    {
+        controlsCenter.SetActive(false);
+        micCenter.SetActive(true);
+    }
+
+    public void ControlsCenterButton()
+    {
+        controlsCenter.SetActive(true);
+        micCenter.SetActive(false);
     }
 
     public void Resume()
