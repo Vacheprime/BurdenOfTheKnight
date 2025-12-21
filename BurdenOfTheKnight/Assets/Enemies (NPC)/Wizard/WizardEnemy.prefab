@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 8873125339683923303}
   - component: {fileID: -786910172809773819}
   - component: {fileID: 7450942819195656694}
+  - component: {fileID: -5797992224101033670}
   m_Layer: 0
   m_Name: WizardEnemy
   m_TagString: Target
@@ -119,6 +120,7 @@ MonoBehaviour:
   detectRange: 18
   attackRange: 12
   shootCooldown: 2
+  turnSpeed: 10
   spellSpawn: {fileID: 1607721624033824341}
   spellPrefab: {fileID: 1947871717301538, guid: cdd61068a2990c64f94545ad12724915, type: 3}
   animator: {fileID: 3507330490181623884}
@@ -172,6 +174,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-5797992224101033670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121705890237454026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5aa2701f4a4b50429ee5fc6331cfe1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeadLookAt
+  headBone: {fileID: 0}
+  headAim: {fileID: 0}
+  targetTag: Player
+  target: {fileID: 0}
+  turnSpeed: 6
+  maxYaw: 70
 --- !u!1 &308316655264050310
 GameObject:
   m_ObjectHideFlags: 0

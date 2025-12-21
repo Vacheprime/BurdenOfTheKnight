@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -83,10 +84,19 @@ public class PlayerManager : MonoBehaviour
 
      public void SetHealth(float points)
     {
+        /*
         currentHealth = Mathf.Clamp(points, 0, maxHealth);
-
+        Debug.Log(healthSlider);
         if (healthSlider != null)
             healthSlider.value = currentHealth;
+        */
+
+        currentHealthFill = Mathf.Clamp(currentHealthFill - points, 0, 300);
+        Vector2 min = healthFill.offsetMin;
+        Vector2 max = healthFill.offsetMax;
+
+        healthFill.offsetMin = new Vector2(0, min.y);
+        healthFill.offsetMax = new Vector2(-currentHealthFill, max.y);
     }
 
 
@@ -102,6 +112,7 @@ public class PlayerManager : MonoBehaviour
         {
             isDead = true;
             Die();
+            return;
         }
 
         audioSource.PlayOneShot(clip);
@@ -141,4 +152,18 @@ public class PlayerManager : MonoBehaviour
         spellsFill.offsetMax = new Vector2(currentSpellsFill, max.y);
     }
 
+    public void IncreaseHealth(float healthAmount)
+    {
+        SetHealth(currentHealth + healthAmount);
+    }
+
+    public void SetMicSensitivity(float value)
+    {
+        loudnessSensitivity = Mathf.Clamp(value, 10f, 200f);
+    }
+
+    public float GetLoudnessSensitivity()
+    {
+        return loudnessSensitivity;
+    }
 }
