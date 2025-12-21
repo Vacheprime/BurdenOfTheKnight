@@ -25,6 +25,7 @@ public class PlayerManager : MonoBehaviour
     public TMP_Text levelTitle;
 
     public static bool playerJustRespawned = false;
+    public string sceneName = "";
 
 
 
@@ -64,11 +65,11 @@ public class PlayerManager : MonoBehaviour
         SetMagicSpell(0, currentSpellsFill);
         CalculateStamina(currentHealthFill);
         // Play respawn sound
-        if (playerJustRespawned)
-        {
-            audioSource.PlayOneShot(clip2);
-            playerJustRespawned = false;
-        }
+        // if (playerJustRespawned)
+        // {
+        //     audioSource.PlayOneShot(clip2);
+        //     playerJustRespawned = false;
+        // }
 
         micText.text = micSlider.value.ToString("F2");
         micSlider.value = loudnessSensitivity;
@@ -146,8 +147,9 @@ public class PlayerManager : MonoBehaviour
 
     private void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        AudioManager.Instance.PlayClip(clip2);
+        PreviousScene.previousSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene("GameOverScene");
+        // AudioManager.Instance.PlayClip(clip2);
     }
 
     public void TakeDamage(float right)
@@ -225,5 +227,10 @@ public class PlayerManager : MonoBehaviour
     public float GetCurrentStaminaFill()
     {
         return currentStaminaFill;
+    }
+
+    public string GetSceneName()
+    {
+        return sceneName;
     }
 }
