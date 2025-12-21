@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
+using System.Diagnostics;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -32,8 +33,10 @@ public class PlayerManager : MonoBehaviour
     private bool isDead = false;
 
     // ======TEST============
+    public RectTransform staminaFill;
     public RectTransform healthFill;
     public RectTransform spellsFill;
+    public float currentStaminaFill = 0f;
     public float currentHealthFill = 0f;
     public float currentSpellsFill = -300f;
     public float minFill = 300f;
@@ -59,6 +62,7 @@ public class PlayerManager : MonoBehaviour
     {
         TakeDamage(0);
         SetMagicSpell(0, currentSpellsFill);
+        CalculateStamina(currentHealthFill);
         // Play respawn sound
         if (playerJustRespawned)
         {
@@ -206,5 +210,20 @@ public class PlayerManager : MonoBehaviour
     public float GetLoudnessSensitivity()
     {
         return loudnessSensitivity;
+    }
+
+    public void CalculateStamina(float right)
+    {
+        currentStaminaFill = Mathf.Clamp(currentStaminaFill - right, 0f, 300f);
+        Vector2 min = staminaFill.offsetMin;
+        Vector2 max = staminaFill.offsetMax;
+
+        staminaFill.offsetMin = new Vector2(0, min.y);
+        staminaFill.offsetMax = new Vector2(-currentStaminaFill, max.y);
+    }
+
+    public float GetCurrentStaminaFill()
+    {
+        return currentStaminaFill;
     }
 }

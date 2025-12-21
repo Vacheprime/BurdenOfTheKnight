@@ -5190,6 +5190,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 186582536}
+    - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: staminaFill
+      value: 
+      objectReference: {fileID: 379029818}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8443,6 +8447,11 @@ MonoBehaviour:
 --- !u!1 &379029817 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1173258139280383401, guid: c9d77837d220356498e64cd1f0de8155, type: 3}
+  m_PrefabInstance: {fileID: 379029813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &379029818 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3705098670081917277, guid: c9d77837d220356498e64cd1f0de8155, type: 3}
   m_PrefabInstance: {fileID: 379029813}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &423953341
@@ -38330,6 +38339,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1220238077}
+  - {fileID: 186582533}
   - {fileID: 908032871}
   - {fileID: 379029813}
   - {fileID: 278782062}
@@ -38588,7 +38598,6 @@ SceneRoots:
   - {fileID: 899702910}
   - {fileID: 867343224}
   - {fileID: 1693183921}
-  - {fileID: 186582533}
   - {fileID: 102190950}
   - {fileID: 1406606156}
   - {fileID: 1749167072}

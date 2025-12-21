@@ -29,7 +29,7 @@ public class PlayerFootstepAudio : MonoBehaviour
 
         if (isMoving)
         {
-            if (running)
+            if (running && PlayerManager.Instance.GetCurrentStaminaFill() < 300f)
                 PlayRunning();
             else
                 PlayWalking();

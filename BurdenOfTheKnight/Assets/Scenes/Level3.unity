@@ -10301,6 +10301,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 692828918}
+    - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
+      propertyPath: staminaFill
+      value: 
+      objectReference: {fileID: 1791777835}
     - target: {fileID: 7903329478940772435, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.6489999
@@ -24133,6 +24137,11 @@ RectTransform:
 --- !u!1 &1791777834 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1173258139280383401, guid: c9d77837d220356498e64cd1f0de8155, type: 3}
+  m_PrefabInstance: {fileID: 1791777830}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1791777835 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3705098670081917277, guid: c9d77837d220356498e64cd1f0de8155, type: 3}
   m_PrefabInstance: {fileID: 1791777830}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1796856759
