@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class FireballProjectile : MonoBehaviour
 {
-    [Header("Stats")]
     public float speed = 15f;
     public float lifeTime = 4f;
     public float damage = 15f;
@@ -17,22 +16,13 @@ public class FireballProjectile : MonoBehaviour
         rb.useGravity = false;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-
-        // Recommended for projectiles:
         rb.isKinematic = false;
     }
 
-    /// <summary>
-    /// Launches the fireball in a given direction
-    /// </summary>
     public void Fire(Vector3 dir)
     {
         dir.Normalize();
-
-        // Rotate the projectile to face where it will travel
         transform.rotation = Quaternion.LookRotation(dir);
-
-        // Use velocity to move
         rb.linearVelocity = dir * speed;
 
         CancelInvoke();
@@ -41,27 +31,19 @@ public class FireballProjectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            // Deal damage
-            PlayerManager.Instance?.TakeDamage(damage);
+        if (!other.CompareTag("Player")) return;
 
-            // Apply knockback if player has Rigidbody
-            Rigidbody rbTarget = other.GetComponent<Rigidbody>();
-            if (rbTarget != null)
-            {
-                Vector3 knockbackDir = (other.transform.position - transform.position).normalized;
-                Vector3 knockback = knockbackDir * knockbackForce + Vector3.up * 2f;
-                rbTarget.AddForce(knockback, ForceMode.Impulse);
-            }
+        PlayerManager.Instance?.TakeDamage(damage);
 
-            Die();
-        }
-        else if (other.CompareTag("Ground") || other.CompareTag("Wall"))
+        Rigidbody rbTarget = other.GetComponent<Rigidbody>();
+        if (rbTarget != null)
         {
-            // Optional: die on environment hit (add tags if you want)
-            Die();
+            Vector3 knockbackDir = (other.transform.position - transform.position).normalized;
+            Vector3 knockback = knockbackDir * knockbackForce + Vector3.up * 2f;
+            rbTarget.AddForce(knockback, ForceMode.Impulse);
         }
+
+        Die();
     }
 
     private void Die()
