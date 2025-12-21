@@ -340,6 +340,8 @@ MonoBehaviour:
   playerCamera: {fileID: 5353176435748065029}
   interactionRadius: 0.25
   interactionDistance: 5
+  surfaceOffset: 0.15
+  promptPrefab: {fileID: 8304857058437792029, guid: cbe7845195219ce4c8a529f6fc8516d3, type: 3}
 --- !u!1 &553854741442411388
 GameObject:
   m_ObjectHideFlags: 0

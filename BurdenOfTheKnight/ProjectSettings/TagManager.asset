@@ -7,11 +7,12 @@ TagManager:
   - Collectible
   - Bat
   - Target
+  - Interactable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interactable
   - Water
   - UI
   - whatIsGround
