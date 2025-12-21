@@ -9,7 +9,7 @@ public class FireballProjectile : MonoBehaviour
     public float damage = 15f;
     public float knockbackForce = 15f;
 
-    Rigidbody rb;
+    private Rigidbody rb;
 
     void Awake()
     {
@@ -17,6 +17,9 @@ public class FireballProjectile : MonoBehaviour
         rb.useGravity = false;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        // Recommended for projectiles:
+        rb.isKinematic = false;
     }
 
     /// <summary>
@@ -26,8 +29,11 @@ public class FireballProjectile : MonoBehaviour
     {
         dir.Normalize();
 
+        // Rotate the projectile to face where it will travel
         transform.rotation = Quaternion.LookRotation(dir);
-        rb.linearVelocity = dir * speed; // <-- fixed line
+
+        // Use velocity to move
+        rb.linearVelocity = dir * speed;
 
         CancelInvoke();
         Invoke(nameof(Die), lifeTime);
@@ -51,9 +57,14 @@ public class FireballProjectile : MonoBehaviour
 
             Die();
         }
+        else if (other.CompareTag("Ground") || other.CompareTag("Wall"))
+        {
+            // Optional: die on environment hit (add tags if you want)
+            Die();
+        }
     }
 
-    void Die()
+    private void Die()
     {
         Destroy(gameObject);
     }
