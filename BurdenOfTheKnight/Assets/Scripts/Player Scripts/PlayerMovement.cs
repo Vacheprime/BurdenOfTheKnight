@@ -23,6 +23,15 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         GetInput();
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            PlayerManager.Instance.CalculateStamina(-2);
+        }
+        else
+        {
+            PlayerManager.Instance.CalculateStamina(2);
+        }
+        Debug.Log(PlayerManager.Instance.GetCurrentStaminaFill());
     }
 
     private void FixedUpdate()
@@ -35,13 +44,13 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+
+        if (Input.GetKey(KeyCode.LeftShift) && PlayerManager.Instance.GetCurrentStaminaFill() < 300f)
         {
-            // Increase speed
             speedMultiplier = 1.5f;
-        } else if (Input.GetKeyUp(KeyCode.LeftShift))
+            
+        } else
         {
-            // Reset
             speedMultiplier = 1f;
         }
     }

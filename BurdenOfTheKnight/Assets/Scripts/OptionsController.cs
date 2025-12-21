@@ -44,6 +44,12 @@ public class OptionsController : MonoBehaviour
         title.gameObject.SetActive(true);
         optionsPanel.SetActive(false);
     }
+
+    public void BackInGame()
+    {
+        optionsPanel.SetActive(false);
+    }
+
     public void ConrolsCenterButton()
     {
         controlsCenter.SetActive(true);
