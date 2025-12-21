@@ -30,6 +30,12 @@ public class NewBehaviourScript : MonoBehaviour
         StartCoroutine(MoveTitle());
     }
 
+    public void DarkenScreenEnding()
+    {
+        darkOverlay.gameObject.SetActive(true);
+        StartCoroutine(FadeInEnding(darkOverlay, 1f));
+    }
+
     private IEnumerator FadeIn(Image img, float duration)
     {
         Color c = img.color;
@@ -49,6 +55,25 @@ public class NewBehaviourScript : MonoBehaviour
         img.color = c;
         // SceneManagement.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    private IEnumerator FadeInEnding(Image img, float duration)
+    {
+        Color c = img.color;
+        c.a = 0;
+        img.color = c;
+
+        float t = 0;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            c.a = Mathf.Lerp(0, 1f, t / duration);
+            img.color = c;
+            yield return null;
+        }
+
+        c.a = 1f;
+        img.color = c;
     }
 
     private IEnumerator MoveTitle()

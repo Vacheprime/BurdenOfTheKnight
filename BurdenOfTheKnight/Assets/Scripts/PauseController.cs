@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class PauseController : MonoBehaviour
 {
     public GameObject canvas;
