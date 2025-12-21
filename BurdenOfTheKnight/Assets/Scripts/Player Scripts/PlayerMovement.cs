@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         GetInput();
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && rb.linearVelocity.magnitude >= 1.0f)
         {
             PlayerManager.Instance.CalculateStamina(-2);
         }
