@@ -10239,14 +10239,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
-      propertyPath: clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 639761da5b2db6545b62e3f3365d933a, type: 3}
-    - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
-      propertyPath: clip2
-      value: 
-      objectReference: {fileID: 8300000, guid: 5b5096148befb6547961e433aa6fb183, type: 3}
-    - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
       propertyPath: micText
       value: 
       objectReference: {fileID: 767590583}
@@ -10271,17 +10263,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 175546843}
     - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 1421472235}
-    - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
       propertyPath: staminaFill
       value: 
       objectReference: {fileID: 175546845}
-    - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
-      propertyPath: enemies.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7322581406354036838, guid: b51a864bea43f8a4caed65b8d82324df, type: 3}
       propertyPath: 'enemies.Array.data[0]'
       value: 
