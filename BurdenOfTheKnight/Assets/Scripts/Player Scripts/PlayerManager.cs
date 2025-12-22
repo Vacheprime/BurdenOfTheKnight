@@ -158,7 +158,7 @@ public class PlayerManager : MonoBehaviour
 
         if (isAllDead && SceneManager.GetActiveScene().name == "FinalLevelScene")
         {
-            if (player.position.y <= 27f)
+            if (player.position.x >= 76f)
             {
                 isCleared = true;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
