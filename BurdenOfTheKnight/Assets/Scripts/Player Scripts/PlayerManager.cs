@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
-using System.Diagnostics;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -23,9 +22,12 @@ public class PlayerManager : MonoBehaviour
     public AudioClip clip;
     public AudioClip clip2;
     public TMP_Text levelTitle;
-
+    public TMP_Text enemyCount;
     public static bool playerJustRespawned = false;
-    public string sceneName = "";
+    public GameObject[] enemies;
+    private int enemiesLeft;
+    private int totalEnemies;
+    private bool isCleared = false;
 
 
 
@@ -73,12 +75,14 @@ public class PlayerManager : MonoBehaviour
 
         micText.text = micSlider.value.ToString("F2");
         micSlider.value = loudnessSensitivity;
+        
     }
 
 
     void Update()
     {
         CalculateMagicPoints();
+        CalculateEnemies();
     }
 
     public float GetMagicPoints() => magicPoints;
@@ -105,10 +109,16 @@ public class PlayerManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        isCleared = true;
+        totalEnemies = enemies.Length;
+        enemiesLeft = totalEnemies;
+        UpdateEnemyCount();
+
         if (scene.name == "SampleScene")
         {
             levelTitle.text = "Level 1/5 ";
-        } else if (scene.name == "Level2")
+        }
+        else if (scene.name == "Level2")
         {
             levelTitle.text = "Level 2/5 ";
         }
@@ -124,7 +134,38 @@ public class PlayerManager : MonoBehaviour
         {
             levelTitle.text = "Level 5/5";
         }
-        
+
+    }
+
+
+    public void CalculateEnemies()
+    {
+        Debug.Log($"Enemies: {enemies}");
+
+        bool isAllDead = true;
+        enemiesLeft = 0;
+
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                isAllDead = false;
+                enemiesLeft = enemiesLeft + 1;
+            }
+        }
+
+        UpdateEnemyCount();
+
+        if (isAllDead)
+        {
+            isCleared = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+    
+    public void UpdateEnemyCount()
+    {
+        enemyCount.text = $"Enemies: {enemiesLeft}/{totalEnemies}";
     }
 
      public void SetHealth(float points)
@@ -229,8 +270,5 @@ public class PlayerManager : MonoBehaviour
         return currentStaminaFill;
     }
 
-    public string GetSceneName()
-    {
-        return sceneName;
-    }
+   
 }

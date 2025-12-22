@@ -25,7 +25,7 @@ public class BatProjectile : MonoBehaviour
 
             Destroy(gameObject);
         }
-        else if (!other.CompareTag("Enemy") && !other.CompareTag("Bat"))
+        else if (!other.CompareTag("Target"))
         {
             Destroy(gameObject);
         }
