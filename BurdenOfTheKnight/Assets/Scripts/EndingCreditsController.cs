@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class EndingCreditsController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class EndingCreditsController : MonoBehaviour
         {
             isDark = true;
             darkEffect.DarkenScreenEnding();
+            Cursor.lockState = CursorLockMode.None;
         }
     }
     
