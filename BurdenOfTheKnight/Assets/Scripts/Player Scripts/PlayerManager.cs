@@ -163,6 +163,7 @@ public class PlayerManager : MonoBehaviour
                 isCleared = true;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
+            return;
         }
         
         if (isAllDead)
