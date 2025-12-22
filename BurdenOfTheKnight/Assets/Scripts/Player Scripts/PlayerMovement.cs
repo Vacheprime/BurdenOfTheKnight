@@ -31,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerManager.Instance.CalculateStamina(2);
         }
-        Debug.Log(PlayerManager.Instance.GetCurrentStaminaFill());
     }
 
     private void FixedUpdate()

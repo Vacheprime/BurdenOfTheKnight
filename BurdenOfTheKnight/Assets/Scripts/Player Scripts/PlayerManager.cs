@@ -111,6 +111,7 @@ public class PlayerManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        CalculateEnemies();
         isCleared = true;
         totalEnemies = enemies.Length;
         enemiesLeft = totalEnemies;
