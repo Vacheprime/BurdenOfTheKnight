@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
 
 
     public static PlayerManager Instance { get; private set; }
+    private Transform player;
 
     private bool isDead = false;
 
@@ -66,6 +67,7 @@ public class PlayerManager : MonoBehaviour
         TakeDamage(0);
         SetMagicSpell(0, currentSpellsFill);
         CalculateStamina(currentHealthFill);
+        player = GetComponent<Transform>();
         // Play respawn sound
         // if (playerJustRespawned)
         // {
@@ -140,8 +142,6 @@ public class PlayerManager : MonoBehaviour
 
     public void CalculateEnemies()
     {
-        Debug.Log($"Enemies: {enemies}");
-
         bool isAllDead = true;
         enemiesLeft = 0;
 
@@ -156,6 +156,15 @@ public class PlayerManager : MonoBehaviour
 
         UpdateEnemyCount();
 
+        if (isAllDead && SceneManager.GetActiveScene().name == "FinalLevelScene")
+        {
+            if (player.position.y <= 27f)
+            {
+                isCleared = true;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
+        
         if (isAllDead)
         {
             isCleared = true;
