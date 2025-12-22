@@ -5,7 +5,6 @@ public class FireMagicScript : MonoBehaviour
 {
     [Header("Stats")]
     public float attackDamage = 20f;
-    public float knockbackForce = 10f;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -21,15 +20,32 @@ public class FireMagicScript : MonoBehaviour
             {
                 // Deal damage
                 damageable.TakeDamage(attackDamage);
+            }
+            else
+            {
+                Debug.LogWarning("The gameObject tagged with 'Target' does not have a component implementing IDamageable.");
+            }
 
-                // Apply knockback if Rigidbody exists
-                Rigidbody rbTarget = collision.gameObject.GetComponent<Rigidbody>();
-                if (rbTarget != null)
-                {
-                    Vector3 knockbackDir = (collision.transform.position - transform.position).normalized;
-                    Vector3 knockback = knockbackDir * knockbackForce + Vector3.up * 2f;
-                    rbTarget.AddForce(knockback, ForceMode.Impulse);
-                }
+            // Play audio
+            if (audioSource != null && clip != null)
+                audioSource.PlayOneShot(clip);
+
+            // Destroy fireball
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        GameObject otherObject = other.gameObject;
+        if (otherObject.CompareTag("Target"))
+        {
+            IDamageable damageable = otherObject.GetComponent<IDamageable>();
+
+            if (damageable != null)
+            {
+                // Deal damage
+                damageable.TakeDamage(attackDamage);
             }
             else
             {

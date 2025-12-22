@@ -200,17 +200,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 0}
   detector: {fileID: 3900862906568650313}
-  magicSlider: {fileID: 0}
   maxHealth: 100
-  healthSlider: {fileID: 0}
   audioSource: {fileID: 3275680401805001531}
   clip: {fileID: 8300000, guid: 639761da5b2db6545b62e3f3365d933a, type: 3}
   clip2: {fileID: 8300000, guid: 5b5096148befb6547961e433aa6fb183, type: 3}
+  levelTitle: {fileID: 0}
+  enemyCount: {fileID: 0}
+  enemies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  staminaFill: {fileID: 0}
   healthFill: {fileID: 0}
   spellsFill: {fileID: 0}
+  currentStaminaFill: 0
   currentHealthFill: 0
   currentSpellsFill: -300
   minFill: 300
+  micSlider: {fileID: 0}
+  micText: {fileID: 0}
 --- !u!82 &3275680401805001531
 AudioSource:
   m_ObjectHideFlags: 0
